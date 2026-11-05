@@ -88,20 +88,27 @@
     <button class="btn secondary" onclick="demoMessage()">إعداد رسالة تجريبية</button>
     <div class="status" id="contactStatus" role="status"></div>
   </section>
+<section class="card adminbox" id="adminPanel" hidden>
+  <h2>👑 لوحة تحكم المالك</h2>
+  <p class="muted">مرحباً بك في إدارة VIP Channel</p>
 
-  <section class="card adminbox">
-    <h2>معاينة المالك (تجريبية)</h2>
-    <p class="muted">هذه أدوات شكلية للعرض فقط. الموافقة على الطلبات وتغيير عدد المشتركين تحتاج تسجيل دخول وصلاحيات آمنة قبل النشر.</p>
-    <label for="count">عدد المشتركين المعروض</label>
-    <input class="field" id="count" type="number" min="0" value="0">
-    <button class="btn secondary" onclick="updateCount()">تحديث العدد في المعاينة</button>
-    <p class="muted">المشتركون: <strong id="countDisplay">0</strong></p>
-    <div class="row">
-      <button class="btn secondary" onclick="alert('معاينة فقط: سنضيف لوحة إدارة آمنة لاحقاً.')">طلبات الاشتراك</button>
-      <button class="btn secondary" onclick="alert('معاينة فقط: سنضيف أدوات المحتوى والتعليقات لاحقاً.')">إدارة المحتوى</button>
-    </div>
-  </section>
-  <div class="footer">VIP Channel · يتطلب تسجيل الدخول واتصال Firebase</div>
+  <h3>طلبات الاشتراك</h3>
+  <button class="btn" id="loadRequestsBtn">
+    عرض الطلبات
+  </button>
+  <div id="requestsList"></div>
+
+  <h3>إدارة عدد المشتركين</h3>
+  <input class="field" id="adminCount"
+         type="number" min="0" value="0">
+  <button class="btn" id="saveCountBtn">
+    حفظ العدد
+  </button>
+  <p>عدد المشتركين: <strong id="countDisplay">0</strong></p>
+
+  <h3>إدارة المحتوى</h3>
+  <p class="muted">إضافة الصور والفيديوهات والتعليقات قريباً.</p>
+</section>  
 </div>
 <script>
 function demoMessage(){
