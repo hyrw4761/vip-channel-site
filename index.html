@@ -129,7 +129,17 @@ function updateCount(){
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signOut, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
@@ -243,7 +253,147 @@ function updateCount(){
       console.error(err);
       showStatus(subStatus, 'لم يتم حفظ الطلب. نحتاج ضبط قواعد Firestore أو التأكد من اسم المجموعة.');
     }
-  });
+  });// إعداد لوحة تحكم المالك
+const ADMIN_EMAIL = "OWNER_EMAIL_HERE";
+
+const adminPanel = document.getElementById('adminPanel');
+const requestsList = document.getElementById('requestsList');
+const loadRequestsBtn = document.getElementById('loadRequestsBtn');
+const adminCount = document.getElementById('adminCount');
+const saveCountBtn = document.getElementById('saveCountBtn');
+
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[c]);
+}
+
+// التحقق من حساب المالك
+onAuthStateChanged(auth, async (user) => {
+  const isAdmin = user &&
+    user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+  adminPanel.hidden = !isAdmin;
+
+  if (user) {
+    try {
+      const snap = await getDoc(doc(db, 'settings', 'public'));
+      const count = snap.exists()
+        ? Number(snap.data().subscriber_count || 0)
+        : 0;
+
+      document.getElementById('countDisplay').innerHTML =
+        '<strong>عدد المشتركين: ' + count + '</strong>';
+    } catch (err) {
+      console.error(err);
+    }
+  }
+});
+
+// تحميل طلبات الاشتراك
+loadRequestsBtn.addEventListener('click', async () => {
+  if (auth.currentUser?.email?.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()) return;
+
+  requestsList.textContent = 'جاري تحميل الطلبات...';
+
+  try {
+    const snap = await getDocs(
+      collection(db, 'subscription_requests')
+    );
+
+    requestsList.innerHTML = '';
+
+    if (snap.empty) {
+      requestsList.textContent = 'لا توجد طلبات اشتراك.';
+      return;
+    }
+
+    snap.forEach(item => {
+      const data = item.data();
+
+      const div = document.createElement('div');
+      div.className = 'card';
+
+      div.innerHTML = `
+        <p>الاسم: ${escapeHTML(data.user_name)}</p>
+        <p>الموقع: ${escapeHTML(data.user_location)}</p>
+        <p>الرسالة: ${escapeHTML(data.message)}</p>
+        <p>البريد: ${escapeHTML(data.user_email)}</p>
+        <p>الحالة: ${escapeHTML(data.admin_decision)}</p>
+        <button class="btn" data-action="approved"
+          data-id="${escapeHTML(item.id)}">قبول</button>
+        <button class="btn secondary" data-action="rejected"
+          data-id="${escapeHTML(item.id)}">رفض</button>
+      `;
+
+      requestsList.appendChild(div);
+    });
+
+  } catch (err) {
+    console.error(err);
+    requestsList.textContent = 'تعذر تحميل الطلبات.';
+  }
+});
+
+// قبول أو رفض الطلب
+requestsList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn) return;
+
+  if (auth.currentUser?.email?.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()) return;
+
+  try {
+    await updateDoc(
+      doc(db, 'subscription_requests', btn.dataset.id),
+      { admin_decision: btn.dataset.action }
+    );
+
+    btn.closest('.card').querySelector('p:nth-child(5)')
+      .textContent = 'الحالة: ' + btn.dataset.action;
+
+    btn.closest('.card').querySelectorAll('button')
+      .forEach(b => b.disabled = true);
+
+  } catch (err) {
+    console.error(err);
+    alert('تعذر تحديث الطلب. تحقق من صلاحيات Firestore.');
+  }
+});
+
+// حفظ عدد المشتركين
+saveCountBtn.addEventListener('click', async () => {
+  if (auth.currentUser?.email?.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()) return;
+
+  const count = Number(adminCount.value);
+
+  if (!Number.isInteger(count) || count < 0) {
+    alert('أدخل عدداً صحيحاً.');
+    return;
+  }
+
+  try {
+    await setDoc(
+      doc(db, 'settings', 'public'),
+      { subscriber_count: count },
+      { merge: true }
+    );
+
+    document.getElementById('countDisplay').innerHTML =
+      '<strong>عدد المشتركين: ' + count + '</strong>';
+
+    alert('تم حفظ عدد المشتركين.');
+  } catch (err) {
+    console.error(err);
+    alert('تعذر الحفظ. تحقق من صلاحيات Firestore.');
+  }
+});
 </script>
 
 </body>
