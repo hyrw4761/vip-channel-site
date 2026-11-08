@@ -3,111 +3,140 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VIP Channel — الاشتراك المدفوع</title>
+<title>منصة القنوات VIP الحصرية</title>
 <style>
-:root{--bg:#0b1020;--panel:#151d32;--panel2:#1c2740;--text:#f4f6fb;--muted:#aab4ca;--gold:#f4c66a;--line:#2b3754;--accent:#7c9cff}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111a31,#080b14 70%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
-.wrap{max-width:760px;margin:auto;padding:16px}.top{display:flex;align-items:center;gap:12px;padding:14px 0 18px}.avatar{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#f4c66a,#9b6a24);display:grid;place-items:center;color:#161616;font-weight:900;font-size:22px}.top h1{font-size:22px;margin:0}.muted{color:var(--muted);font-size:14px}.pill{border:1px solid #6c592f;color:var(--gold);border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin-top:5px}
-.card{background:rgba(21,29,50,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 10px 30px #0002}.card h2{font-size:18px;margin:0 0 10px}.row{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;font-size:14px;cursor:pointer;background:var(--gold);color:#201706;text-decoration:none;display:inline-block;text-align:center}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn:active{transform:scale(.99)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.media{position:relative;min-height:168px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#344466,#161f35);display:flex;align-items:center;justify-content:center;text-align:center;padding:14px}.media.photo{background:linear-gradient(135deg,#765b77,#283e5c)}.media .fake{font-size:44px;opacity:.65;filter:blur(1px)}.blurcover{position:absolute;inset:0;background:#090d18a8;backdrop-filter:blur(5px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px}.lock{font-size:25px}.blurcover b{font-size:14px}.blurcover small{color:#e1e6f1;font-size:12px}.media-caption{font-size:13px;margin-top:7px;color:#dbe2f2}.field{display:block;width:100%;padding:12px;margin:7px 0 12px;background:#0e1527;color:var(--text);border:1px solid #34415f;border-radius:10px;font:inherit}.note{font-size:12px;color:var(--muted)}.status{padding:10px;border-radius:10px;background:#10182a;border:1px solid var(--line);margin-top:10px;display:none}.status.show{display:block}.adminbox{border:1px dashed #8d784a}.footer{text-align:center;color:var(--muted);font-size:12px;padding:22px 0}
-@media(max-width:440px){.grid{grid-template-columns:1fr}.media{min-height:190px}.top h1{font-size:20px}}
+:root{--bg:#070a14;--panel:#111827;--panel2:#1f293d;--text:#f9fafb;--muted:#9ca3af;--gold:#f59e0b;--line:#374151;--accent:#3b82f6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6;
+-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;} /* منع تحديد النصوص وحفظ الصور */
+.wrap{max-width:800px;margin:auto;padding:16px}
+.top{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.avatar{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#f59e0b,#d97706);display:grid;place-items:center;color:#000;font-weight:900;font-size:24px}
+.top h1{font-size:22px;margin:0}.muted{color:var(--muted);font-size:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+.card h2{font-size:18px;margin:0 0 12px;color:var(--gold)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;font-size:14px;cursor:pointer;background:var(--gold);color:#111;text-decoration:none;display:inline-block;text-align:center}
+.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn:active{transform:scale(.98)}
+.channels-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.channel-card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+.channel-img{width:100%;height:120px;object-fit:cover;border-radius:10px;background:#333;margin-bottom:10px}
+.field{display:block;width:100%;padding:12px;margin:8px 0 14px;background:#030712;color:var(--text);border:1px solid var(--line);border-radius:10px;font:inherit}
+.note{font-size:12px;color:var(--muted)}
+.status{padding:12px;border-radius:10px;background:#030712;border:1px solid var(--line);margin-top:10px;display:none}
+.status.show{display:block}
+.adminbox{border:2px dashed #d97706;background:#0d111a}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 </style>
 </head>
-<body>
+<body oncontextmenu="return false;"> <!-- منع النقر بزر الماوس الأيمن لحفظ الصور -->
+
 <div class="wrap">
   <header class="top">
     <div class="avatar">VIP</div>
     <div style="flex:1">
-      <h1 id="channelName">VIP Channel</h1>
-      <div class="muted">قناة الصور والفيديوهات الحصرية</div>
-      <span class="pill">عدد المشتركين: <strong id="globalCountDisplay" style="color:var(--gold);">500</strong> مشترك</span>
+      <h1 id="platformTitle">شبكة القنوات الحصرية</h1>
+      <div class="muted">محتوى مرئي محمي وعالي الحصرية</div>
+      <span style="background:rgba(245,158,11,.1);border:1px solid var(--gold);color:var(--gold);padding:4px 12px;border-radius:99px;font-size:12px;display:inline-block;margin-top:6px;">
+        إجمالي المشتركين بالمنصة: <strong id="globalCountDisplay">500</strong>
+      </span>
     </div>
   </header>
 
+  <!-- قسم اختيار القنوات -->
   <section class="card">
-    <h2>انضم إلى القناة (اشتراك مدفوع)</h2>
-    <p class="muted">قم بالدفع بواسطة البطاقة المالية للحصول على رابط القناة أو تفعيل حسابك فوراً.</p>
-    <div class="row">
-      <!-- استبدل علامة # برابط الدفع الخاص بك مثل PayPal أو Stripe -->
-      <a href="https://www.paypal.com" target="_blank" class="btn">ادفع بالبطاقة المالية / PayPal 💳</a>
-      <button class="btn secondary" onclick="document.getElementById('accountBox').scrollIntoView({behavior:'smooth'})">تسجيل حسابي بالموقع</button>
+    <h2>📺 اختر القناة التي تريد الاشتراك بها</h2>
+    <p class="muted">تصفح القنوات المتاحة أدناه، اختر القناة المناسبة، وتعرف على الأسعار ونوع الاشتراك.</p>
+    
+    <div class="channels-grid" id="channelsContainer">
+        <!-- القناة الأولى -->
+        <div class="channel-card">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" class="channel-img" alt="قناة السينما">
+            <h3 style="margin:6px 0;font-size:16px;">قناة الأفلام والسينما</h3>
+            <p class="muted" style="font-size:13px;">أحدث الأفلام الحصرية بجودة عالية.</p>
+            <div style="margin:8px 0;font-size:13px;color:var(--gold);">الشهري: 10$ | المفتوحة: 45$</div>
+            <button class="btn" onclick="selectChannel('قناة الأفلام والسينما')">اختر واشترك</button>
+        </div>
+        <!-- القناة الثانية -->
+        <div class="channel-card">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400" class="channel-img" alt="قناة الألعاب">
+            <h3 style="margin:6px 0;font-size:16px;">قناة الألعاب والتقنية</h3>
+            <p class="muted" style="font-size:13px;">شروحات وبثوث حصرية للمحترفين.</p>
+            <div style="margin:8px 0;font-size:13px;color:var(--gold);">الشهري: 8$ | المفتوحة: 35$</div>
+            <button class="btn" onclick="selectChannel('قناة الألعاب والتقنية')">اختر واشترك</button>
+        </div>
     </div>
   </section>
 
-  <section class="card">
-    <h2>المحتوى الحصري للمشتركين</h2>
-    <div class="grid">
-      <div>
-        <div class="media photo"><div class="fake">▧</div><div class="blurcover"><div class="lock">🔒</div><b>صورة خاصة VIP</b><small>متاحة بعد الدفع</small></div></div>
-        <div class="media-caption">صورة حصرية</div>
-      </div>
-      <div>
-        <div class="media"><div class="fake">▶</div><div class="blurcover"><div class="lock">🔒</div><b>فيديو خاص VIP</b><small>متاح بعد الدفع</small></div></div>
-        <div class="media-caption">فيديو حصري</div>
-      </div>
-    </div>
-  </section>
+  <!-- صندوق اختيار نوع الاشتراك والدفع -->
+  <section class="card" id="subSection">
+    <h2>💳 إتمام الاشتراك المباشر</h2>
+    <p class="muted">القناة المحددة: <strong id="selectedChannelName" style="color:var(--gold);">لم يتم الاختار بعد (اختر قناة أعلاه)</strong></p>
+    
+    <label for="subType">اختر نوع الاشتراك:</label>
+    <select class="field" id="subType">
+        <option value="monthly">اشتراك شهري (30 يوماً فقط ثم يتطلب التجديد) - السعر: حسب القناة</option>
+        <option value="lifetime">اشتراك مفتوح دائم (لا ينتهي أبداً) - السعر: حسب القناة</option>
+    </select>
 
-  <section class="card" id="accountBox">
-    <h2>تفعيل الحساب بعد الدفع</h2>
-    <p class="muted">بعد إتمام عملية الدفع بالبطاقة، أنشئ حسابك هنا لتسجيل الدخول للموقع.</p>
     <label for="authEmail">البريد الإلكتروني</label>
-    <input class="field" id="authEmail" type="email" autocomplete="email" required placeholder="name@example.com">
-    <label for="authPassword">كلمة المرور</label>
-    <input class="field" id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="6 أحرف على الأقل">
+    <input class="field" id="authEmail" type="email" placeholder="name@example.com">
+    
+    <label for="authPassword">كلمة المرور (6 أحرف على الأقل)</label>
+    <input class="field" id="authPassword" type="password" placeholder="********">
+
     <div class="row">
-      <button class="btn" id="signUpBtn" type="button">إنشاء الحساب وتفعيل الاشتراك</button>
-      <button class="btn secondary" id="signInBtn" type="button">تسجيل الدخول</button>
-      <button class="btn secondary" id="signOutBtn" type="button" hidden>تسجيل الخروج</button>
+      <button class="btn" id="payAndJoinBtn">إتمام الدفع بالبطاقة والاشتراك 💳</button>
+      <button class="btn secondary" id="signInBtn">تسجيل الدخول</button>
+      <button class="btn secondary" id="signOutBtn" hidden>تسجيل الخروج</button>
     </div>
-    <div class="status" id="authStatus" role="status"></div>
-    <p class="note" id="authUserText">لم تقم بتسجيل الدخول بعد.</p>
+    <div class="status" id="authStatus"></div>
+    <p class="note" id="authUserText" style="margin-top:10px;">لم تقم بتسجيل الدخول بعد.</p>
   </section>
 
-  <section class="card" id="contact">
-    <h2>الدعم الفني والاستفسارات</h2>
-    <p class="muted">إذا واجهتك مشكلة في الدفع، راسلنا هنا.</p>
-    <label for="contactMsg">رسالتك</label>
-    <textarea class="field" id="contactMsg" rows="3" placeholder="اكتب رسالتك..."></textarea>
-    <button class="btn secondary" onclick="demoMessage()">إرسال</button>
-    <div class="status" id="contactStatus" role="status"></div>
-  </section>
-
+  <!-- لوحة تحكم المالك المرتبة -->
   <section class="card adminbox">
-    <h2>لوحة تحكم المالك (تعديل عدد المشتركين)</h2>
-    <p class="muted">اكتب الرقم الذي تريد أن يظهر للزوار في الأعلى.</p>
-    <label for="count">عدد المشتركين</label>
-    <input class="field" id="count" type="number" min="0" value="500">
-    <button class="btn" onclick="updateCount()">حفظ وتحديث العدد للجميع</button>
-    <p class="muted" style="margin-top:10px;">العدد الحالي المعروض: <strong id="countDisplay">500</strong></p>
+    <h2>👑 لوحة تحكم المالك المركزية</h2>
+    <p class="muted">تحكم بعدد المشتركين الظاهر للزوار، وأسعار القنوات، وإعدادات المنصة بكل سهولة.</p>
+    
+    <label for="countInput">تعديل عدد المشتركين الإجمالي الظاهر:</label>
+    <input class="field" id="countInput" type="number" value="500">
+    <button class="btn" onclick="updateGlobalCount()">حفظ وتحديث عدد المشتركين</button>
+    
+    <div style="margin-top:15px;border-top:1px solid var(--line);padding-top:12px;">
+        <p class="muted">الحالة الحالية للعدد المعروض: <strong id="currentDisplayedCount">500</strong></p>
+    </div>
   </section>
 
-  <div class="footer">VIP Channel · دفع إلكتروني آمن</div>
+  <div class="footer">جميع الحقوق محفوظة · محتوى محمي ضد النسخ والتقاط الشاشة</div>
 </div>
 
 <script>
-function demoMessage(){
- const msg=document.getElementById('contactMsg').value.trim();
- const box=document.getElementById('contactStatus');
- box.textContent=msg?'تم إرسال رسالتك للدعم بنجاح!':'اكتب رسالتك أولاً.';
- box.classList.add('show');
+let chosenChannel = "لم يتم اختيار قناة بعد";
+
+function selectChannel(name) {
+    chosenChannel = name;
+    document.getElementById('selectedChannelName').textContent = name;
+    alert('تم اختيار: ' + name + ' بنجاح. انتقل لأسفل لإتمام الاشتراك.');
+    document.getElementById('subSection').scrollIntoView({behavior:'smooth'});
 }
 
-function updateCount(){
- const n = Math.max(0, Number(document.getElementById('count').value) || 0);
- document.getElementById('countDisplay').textContent = n;
- document.getElementById('globalCountDisplay').textContent = n;
- localStorage.setItem('custom_sub_count', n);
- alert('تم تحديث عدد المشتركين بنجاح!');
+function updateGlobalCount() {
+    const val = Math.max(0, Number(document.getElementById('countInput').value) || 0);
+    document.getElementById('globalCountDisplay').textContent = val;
+    document.getElementById('currentDisplayedCount').textContent = val;
+    localStorage.setItem('vip_platform_sub_count', val);
+    alert('تم تحديث عدد المشتركين في المنصة بنجاح!');
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const savedCount = localStorage.getItem('custom_sub_count');
-  if (savedCount !== null) {
-    document.getElementById('count').value = savedCount;
-    document.getElementById('countDisplay').textContent = savedCount;
-    document.getElementById('globalCountDisplay').textContent = savedCount;
-  }
+    const saved = localStorage.getItem('vip_platform_sub_count');
+    if(saved !== null) {
+        document.getElementById('countInput').value = saved;
+        document.getElementById('globalCountDisplay').textContent = saved;
+        document.getElementById('currentDisplayedCount').textContent = saved;
+    }
 });
 </script>
 
@@ -132,78 +161,68 @@ window.addEventListener('DOMContentLoaded', () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const authEmail = document.getElementById('authEmail');
-  const authPassword = document.getElementById('authPassword');
+  const emailIn = document.getElementById('authEmail');
+  const passIn = document.getElementById('authPassword');
+  const payBtn = document.getElementById('payAndJoinBtn');
   const signInBtn = document.getElementById('signInBtn');
-  const signUpBtn = document.getElementById('signUpBtn');
-  const authStatus = document.getElementById('authStatus');
-  const authUserText = document.getElementById('authUserText');
   const signOutBtn = document.getElementById('signOutBtn');
+  const statusBox = document.getElementById('authStatus');
+  const userText = document.getElementById('authUserText');
 
-  function showStatus(el, message) {
-    el.textContent = message;
-    el.classList.add('show');
+  function showMsg(txt) {
+      statusBox.textContent = txt;
+      statusBox.classList.add('show');
   }
 
-  signUpBtn.addEventListener('click', async () => {
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
-    if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور.');
-      return;
-    }
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, 'تم إنشاء حسابك وتفعيله بنجاح بعد الدفع!');
-    } catch (err) {
-      console.error(err);
-      showStatus(authStatus, 'تعذر إنشاء الحساب. تأكد من البريد أو أن كلمة المرور 6 أحرف على الأقل.');
-    }
+  payBtn.addEventListener('click', async () => {
+      const email = emailIn.value.trim();
+      const pass = passIn.value;
+      const subType = document.getElementById('subType').value;
+
+      if(!email || !pass) {
+          showMsg('الرجاء إدخال البريد الإلكتروني وكلمة المرور.');
+          return;
+      }
+      try {
+          await createUserWithEmailAndPassword(auth, email, pass);
+          const typeText = subType === 'monthly' ? 'اشتراك شهري (30 يوماً)' : 'اشتراك مفتوح دائم';
+          showMsg(`🎉 تم الدفع والاشتراك بنجاح في [ ${chosenChannel} ] بنظام (${typeText})! حسابك مفعل فوريًا.`);
+      } catch(err) {
+          console.error(err);
+          showMsg('تعذر إنشاء الحساب. البريد قد يكون مستخدماً أو كلمة المرور قصيرة.');
+      }
   });
 
   signInBtn.addEventListener('click', async () => {
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
-    if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور.');
-      return;
-    }
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, 'تم تسجيل الدخول بنجاح.');
-    } catch (err) {
-      console.error(err);
-      showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من صحة البيانات.');
-    }
+      const email = emailIn.value.trim();
+      const pass = passIn.value;
+      if(!email || !pass) {
+          showMsg('الرجاء كتابة البريد وكلمة المرور لتسجيل الدخول.');
+          return;
+      }
+      try {
+          await signInWithEmailAndPassword(auth, email, pass);
+          showMsg('مرحباً بك مجدداً! اشتراكك مفعل.');
+      } catch(err) {
+          console.error(err);
+          showMsg('خطأ في تسجيل الدخول. تأكد من صحة البريد وكلمة المرور.');
+      }
   });
 
   signOutBtn.addEventListener('click', async () => {
-    try {
       await signOut(auth);
-      showStatus(authStatus, 'تم تسجيل الخروج.');
-    } catch (err) {
-      console.error(err);
-      showStatus(authStatus, 'تعذر تسجيل الخروج.');
-    }
+      showMsg('تم تسجيل الخروج بنجاح.');
   });
 
   onAuthStateChanged(auth, (user) => {
-    const loggedIn = Boolean(user);
-    authUserText.textContent = loggedIn
-      ? 'الحساب مفعل: ' + user.email
-      : 'لم تقم بتسجيل الدخول بعد.';
-    
-    signOutBtn.hidden = !loggedIn;
-    signInBtn.hidden = loggedIn;
-    signUpBtn.hidden = loggedIn;
-    
-    authEmail.disabled = loggedIn;
-    authPassword.disabled = loggedIn;
-    
-    if (!loggedIn) {
-      authEmail.value = '';
-      authPassword.value = '';
-    }
+      const logged = Boolean(user);
+      userText.textContent = logged ? `المستخدم الحالي: ${user.email} (حساب مفعل)` : 'لم تقم بتسجيل الدخول بعد.';
+      signOutBtn.hidden = !logged;
+      payBtn.hidden = logged;
+      signInBtn.hidden = logged;
+      emailIn.disabled = logged;
+      passIn.disabled = logged;
+      if(!logged) { emailIn.value=''; passIn.value=''; }
   });
 </script>
 
