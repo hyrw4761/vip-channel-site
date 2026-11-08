@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VIP Channel — اشتراك مدفوع مباشر</title>
+<title>VIP Channel — الاشتراك المدفوع</title>
 <style>
 :root{--bg:#0b1020;--panel:#151d32;--panel2:#1c2740;--text:#f4f6fb;--muted:#aab4ca;--gold:#f4c66a;--line:#2b3754;--accent:#7c9cff}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111a31,#080b14 70%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
 .wrap{max-width:760px;margin:auto;padding:16px}.top{display:flex;align-items:center;gap:12px;padding:14px 0 18px}.avatar{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#f4c66a,#9b6a24);display:grid;place-items:center;color:#161616;font-weight:900;font-size:22px}.top h1{font-size:22px;margin:0}.muted{color:var(--muted);font-size:14px}.pill{border:1px solid #6c592f;color:var(--gold);border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin-top:5px}
-.card{background:rgba(21,29,50,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 10px 30px #0002}.card h2{font-size:18px;margin:0 0 10px}.row{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;font-size:14px;cursor:pointer;background:var(--gold);color:#201706}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn:active{transform:scale(.99)}
+.card{background:rgba(21,29,50,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 10px 30px #0002}.card h2{font-size:18px;margin:0 0 10px}.row{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;font-size:14px;cursor:pointer;background:var(--gold);color:#201706;text-decoration:none;display:inline-block;text-align:center}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn:active{transform:scale(.99)}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.media{position:relative;min-height:168px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#344466,#161f35);display:flex;align-items:center;justify-content:center;text-align:center;padding:14px}.media.photo{background:linear-gradient(135deg,#765b77,#283e5c)}.media .fake{font-size:44px;opacity:.65;filter:blur(1px)}.blurcover{position:absolute;inset:0;background:#090d18a8;backdrop-filter:blur(5px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px}.lock{font-size:25px}.blurcover b{font-size:14px}.blurcover small{color:#e1e6f1;font-size:12px}.media-caption{font-size:13px;margin-top:7px;color:#dbe2f2}.field{display:block;width:100%;padding:12px;margin:7px 0 12px;background:#0e1527;color:var(--text);border:1px solid #34415f;border-radius:10px;font:inherit}.note{font-size:12px;color:var(--muted)}.status{padding:10px;border-radius:10px;background:#10182a;border:1px solid var(--line);margin-top:10px;display:none}.status.show{display:block}.adminbox{border:1px dashed #8d784a}.footer{text-align:center;color:var(--muted);font-size:12px;padding:22px 0}
 @media(max-width:440px){.grid{grid-template-columns:1fr}.media{min-height:190px}.top h1{font-size:20px}}
 </style>
@@ -25,70 +25,71 @@
   </header>
 
   <section class="card">
-    <h2>انضم إلى القناة المدفوعة</h2>
-    <p class="muted">احصل على وصول فوري ومباشر للمحتوى الحصري بعد إتمام الاشتراك المدفوع.</p>
+    <h2>انضم إلى القناة (اشتراك مدفوع)</h2>
+    <p class="muted">قم بالدفع بواسطة البطاقة المالية للحصول على رابط القناة أو تفعيل حسابك فوراً.</p>
     <div class="row">
-      <button class="btn" onclick="document.getElementById('subscribeBox').scrollIntoView({behavior:'smooth'})">اشترك الآن (دفع مباشر)</button>
-      <button class="btn secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">استفسار للمالك</button>
+      <!-- استبدل علامة # برابط الدفع الخاص بك مثل PayPal أو Stripe -->
+      <a href="https://www.paypal.com" target="_blank" class="btn">ادفع بالبطاقة المالية / PayPal 💳</a>
+      <button class="btn secondary" onclick="document.getElementById('accountBox').scrollIntoView({behavior:'smooth'})">تسجيل حسابي بالموقع</button>
     </div>
   </section>
 
   <section class="card">
-    <h2>المحتوى الحصري</h2>
+    <h2>المحتوى الحصري للمشتركين</h2>
     <div class="grid">
       <div>
-        <div class="media photo"><div class="fake">▧</div><div class="blurcover"><div class="lock">🔒</div><b>صورة خاصة VIP</b><small>للمشتركين المدفوعين فقط</small></div></div>
-        <div class="media-caption">صورة حصرية · محتوى مدفوع</div>
+        <div class="media photo"><div class="fake">▧</div><div class="blurcover"><div class="lock">🔒</div><b>صورة خاصة VIP</b><small>متاحة بعد الدفع</small></div></div>
+        <div class="media-caption">صورة حصرية</div>
       </div>
       <div>
-        <div class="media"><div class="fake">▶</div><div class="blurcover"><div class="lock">🔒</div><b>فيديو خاص VIP</b><small>للمشتركين المدفوعين فقط</small></div></div>
-        <div class="media-caption">فيديو حصري · محتوى مدفوع</div>
+        <div class="media"><div class="fake">▶</div><div class="blurcover"><div class="lock">🔒</div><b>فيديو خاص VIP</b><small>متاح بعد الدفع</small></div></div>
+        <div class="media-caption">فيديو حصري</div>
       </div>
     </div>
   </section>
 
-  <section class="card" id="subscribeBox">
-    <h2>بوابة الاشتراك المدفوع المباشر</h2>
-    <p class="muted">أدخل بريدك الإلكتروني وكلمة المرور، ثم اضغط على زر إتمام الدفع والاشتراك لتفعيل حسابك فوراً دون انتظار.</p>
+  <section class="card" id="accountBox">
+    <h2>تفعيل الحساب بعد الدفع</h2>
+    <p class="muted">بعد إتمام عملية الدفع بالبطاقة، أنشئ حسابك هنا لتسجيل الدخول للموقع.</p>
     <label for="authEmail">البريد الإلكتروني</label>
     <input class="field" id="authEmail" type="email" autocomplete="email" required placeholder="name@example.com">
     <label for="authPassword">كلمة المرور</label>
     <input class="field" id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="6 أحرف على الأقل">
     <div class="row">
-      <button class="btn" id="payAndJoinBtn" type="button">إتمام الدفع والاشتراك المباشر 💳</button>
+      <button class="btn" id="signUpBtn" type="button">إنشاء الحساب وتفعيل الاشتراك</button>
       <button class="btn secondary" id="signInBtn" type="button">تسجيل الدخول</button>
       <button class="btn secondary" id="signOutBtn" type="button" hidden>تسجيل الخروج</button>
     </div>
     <div class="status" id="authStatus" role="status"></div>
-    <p class="note" id="authUserText">لم تقم بالاشتراك بعد.</p>
+    <p class="note" id="authUserText">لم تقم بتسجيل الدخول بعد.</p>
   </section>
 
   <section class="card" id="contact">
-    <h2>التواصل ودعم المشتركين</h2>
-    <p class="muted">هل تواجه مشكلة في الدفع أو الاشتراك؟ أرسل رسالة للمالك.</p>
+    <h2>الدعم الفني والاستفسارات</h2>
+    <p class="muted">إذا واجهتك مشكلة في الدفع، راسلنا هنا.</p>
     <label for="contactMsg">رسالتك</label>
-    <textarea class="field" id="contactMsg" rows="3" placeholder="اكتب استفسارك هنا..."></textarea>
-    <button class="btn secondary" onclick="demoMessage()">إرسال الاستفسار</button>
+    <textarea class="field" id="contactMsg" rows="3" placeholder="اكتب رسالتك..."></textarea>
+    <button class="btn secondary" onclick="demoMessage()">إرسال</button>
     <div class="status" id="contactStatus" role="status"></div>
   </section>
 
   <section class="card adminbox">
     <h2>لوحة تحكم المالك (تعديل عدد المشتركين)</h2>
-    <p class="muted">اكتب الرقم الذي تريد أن يظهر للزوار كعدد للمشتركين، ثم اضغط حفظ.</p>
-    <label for="count">العدد المطلوب عرضه</label>
+    <p class="muted">اكتب الرقم الذي تريد أن يظهر للزوار في الأعلى.</p>
+    <label for="count">عدد المشتركين</label>
     <input class="field" id="count" type="number" min="0" value="500">
     <button class="btn" onclick="updateCount()">حفظ وتحديث العدد للجميع</button>
     <p class="muted" style="margin-top:10px;">العدد الحالي المعروض: <strong id="countDisplay">500</strong></p>
   </section>
 
-  <div class="footer">VIP Channel · اشتراك مدفوع ومباشر</div>
+  <div class="footer">VIP Channel · دفع إلكتروني آمن</div>
 </div>
 
 <script>
 function demoMessage(){
  const msg=document.getElementById('contactMsg').value.trim();
  const box=document.getElementById('contactStatus');
- box.textContent=msg?'تم إرسال رسالتك إلى الدعم بنجاح!':'اكتب رسالتك أولاً.';
+ box.textContent=msg?'تم إرسال رسالتك للدعم بنجاح!':'اكتب رسالتك أولاً.';
  box.classList.add('show');
 }
 
@@ -134,7 +135,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const authEmail = document.getElementById('authEmail');
   const authPassword = document.getElementById('authPassword');
   const signInBtn = document.getElementById('signInBtn');
-  const payAndJoinBtn = document.getElementById('payAndJoinBtn');
+  const signUpBtn = document.getElementById('signUpBtn');
   const authStatus = document.getElementById('authStatus');
   const authUserText = document.getElementById('authUserText');
   const signOutBtn = document.getElementById('signOutBtn');
@@ -144,20 +145,19 @@ window.addEventListener('DOMContentLoaded', () => {
     el.classList.add('show');
   }
 
-  payAndJoinBtn.addEventListener('click', async () => {
+  signUpBtn.addEventListener('click', async () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور لإتمام الاشتراك.');
+      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور.');
       return;
     }
     try {
-      // هنا يتم إنشاء الحساب وتفعيله كاشتراك مدفوع مباشر فوري
       await createUserWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, '🎉 تم الدفع والاشتراك بنجاح! حسابك مفعل الآن بشكل مباشر.');
+      showStatus(authStatus, 'تم إنشاء حسابك وتفعيله بنجاح بعد الدفع!');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر إتمام الاشتراك. قد يكون البريد مسجلاً مسبقاً أو كلمة المرور قصيرة (6 أحرف على الأقل).');
+      showStatus(authStatus, 'تعذر إنشاء الحساب. تأكد من البريد أو أن كلمة المرور 6 أحرف على الأقل.');
     }
   });
 
@@ -165,22 +165,22 @@ window.addEventListener('DOMContentLoaded', () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور لتسجيل الدخول.');
+      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور.');
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, 'مرحباً بك مجدداً! اشتراكك المدفوع مفعل.');
+      showStatus(authStatus, 'تم تسجيل الدخول بنجاح.');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من صحة البريد وكلمة المرور.');
+      showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من صحة البيانات.');
     }
   });
 
   signOutBtn.addEventListener('click', async () => {
     try {
       await signOut(auth);
-      showStatus(authStatus, 'تم تسجيل الخروج بنجاح.');
+      showStatus(authStatus, 'تم تسجيل الخروج.');
     } catch (err) {
       console.error(err);
       showStatus(authStatus, 'تعذر تسجيل الخروج.');
@@ -190,12 +190,12 @@ window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, (user) => {
     const loggedIn = Boolean(user);
     authUserText.textContent = loggedIn
-      ? 'حالة الحساب: مشترك مدفوع مباشر (' + user.email + ')'
-      : 'لم تقم بالاشتراك بعد.';
+      ? 'الحساب مفعل: ' + user.email
+      : 'لم تقم بتسجيل الدخول بعد.';
     
     signOutBtn.hidden = !loggedIn;
-    payAndJoinBtn.hidden = loggedIn;
     signInBtn.hidden = loggedIn;
+    signUpBtn.hidden = loggedIn;
     
     authEmail.disabled = loggedIn;
     authPassword.disabled = loggedIn;
