@@ -20,7 +20,7 @@
     <div style="flex:1">
       <h1 id="channelName">VIP Channel</h1>
       <div class="muted">قناة خاصة بالصور والفيديوهات</div>
-      <span class="pill">محتوى للأعضاء المشتركين</span>
+      <span class="pill">عدد المشتركين: <strong id="globalCountDisplay" style="color:var(--gold);">500</strong> مشترك</span>
     </div>
   </header>
 
@@ -47,7 +47,6 @@
     </div>
     <p class="note">هذه معاينة شكلية فقط؛ لا توجد صور أو فيديوهات فعلية مرفوعة في النموذج.</p>
   </section>
-
 
   <section class="card" id="account">
     <h2>حساب المشترك</h2>
@@ -88,28 +87,19 @@
     <button class="btn secondary" onclick="demoMessage()">إعداد رسالة تجريبية</button>
     <div class="status" id="contactStatus" role="status"></div>
   </section>
-<section class="card adminbox" id="adminPanel" hidden>
-  <h2>👑 لوحة تحكم المالك</h2>
-  <p class="muted">مرحباً بك في إدارة VIP Channel</p>
 
-  <h3>طلبات الاشتراك</h3>
-  <button class="btn" id="loadRequestsBtn">
-    عرض الطلبات
-  </button>
-  <div id="requestsList"></div>
+  <section class="card adminbox">
+    <h2>لوحة تحكم المالك (لتغيير عدد المشتركين)</h2>
+    <p class="muted">اكتب العدد الذي تريد أن يظهر للزوار في الأعلى، ثم اضغط تحديث.</p>
+    <label for="count">العدد المطلوب عرضه</label>
+    <input class="field" id="count" type="number" min="0" value="500">
+    <button class="btn" onclick="updateCount()">تحديث وإظهار العدد للجميع</button>
+    <p class="muted" style="margin-top:10px;">العدد الحالي المعروض في القناة: <strong id="countDisplay">500</strong></p>
+  </section>
 
-  <h3>إدارة عدد المشتركين</h3>
-  <input class="field" id="adminCount"
-         type="number" min="0" value="0">
-  <button class="btn" id="saveCountBtn">
-    حفظ العدد
-  </button>
-  <p>عدد المشتركين: <strong id="countDisplay">0</strong></p>
-
-  <h3>إدارة المحتوى</h3>
-  <p class="muted">إضافة الصور والفيديوهات والتعليقات قريباً.</p>
-</section>  
+  <div class="footer">VIP Channel · يتطلب تسجيل الدخول واتصال Firebase</div>
 </div>
+
 <script>
 function demoMessage(){
  const msg=document.getElementById('contactMsg').value.trim();
@@ -117,10 +107,23 @@ function demoMessage(){
  box.textContent=msg?'تم تجهيز رسالتك للمعاينة فقط. لم يتم إرسالها إلى المالك.':'اكتب رسالتك أولاً.';
  box.classList.add('show');
 }
+
 function updateCount(){
- const n=Math.max(0,Number(document.getElementById('count').value)||0);
- document.getElementById('countDisplay').textContent=n;
+ const n = Math.max(0, Number(document.getElementById('count').value) || 0);
+ document.getElementById('countDisplay').textContent = n;
+ document.getElementById('globalCountDisplay').textContent = n;
+ localStorage.setItem('custom_sub_count', n); // لحفظ العدد حتى لو تم تحديث الصفحة
 }
+
+// استرجاع العدد المحفوظ عند فتح الصفحة
+window.addEventListener('DOMContentLoaded', () => {
+  const savedCount = localStorage.getItem('custom_sub_count');
+  if (savedCount !== null) {
+    document.getElementById('count').value = savedCount;
+    document.getElementById('countDisplay').textContent = savedCount;
+    document.getElementById('globalCountDisplay').textContent = savedCount;
+  }
+});
 </script>
 
 <script type="module">
@@ -129,17 +132,7 @@ function updateCount(){
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signOut, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
@@ -158,6 +151,8 @@ import {
 
   const authEmail = document.getElementById('authEmail');
   const authPassword = document.getElementById('authPassword');
+  const signInBtn = document.getElementById('signInBtn');
+  const signUpBtn = document.getElementById('signUpBtn');
   const authStatus = document.getElementById('authStatus');
   const authUserText = document.getElementById('authUserText');
   const signOutBtn = document.getElementById('signOutBtn');
@@ -169,7 +164,7 @@ import {
     el.classList.add('show');
   }
 
-  document.getElementById('signUpBtn').addEventListener('click', async () => {
+  signUpBtn.addEventListener('click', async () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
@@ -181,11 +176,11 @@ import {
       showStatus(authStatus, 'تم إنشاء الحساب وتسجيل الدخول.');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر إنشاء الحساب. تأكد من البريد وكلمة المرور، أو أرسل صورة الخطأ.');
+      showStatus(authStatus, 'تعذر إنشاء الحساب. تأكد من البريد أو أن كلمة المرور 6 أحرف على الأقل.');
     }
   });
 
-  document.getElementById('signInBtn').addEventListener('click', async () => {
+  signInBtn.addEventListener('click', async () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
@@ -197,7 +192,7 @@ import {
       showStatus(authStatus, 'تم تسجيل الدخول بنجاح.');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من البريد وكلمة المرور.');
+      showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من صحة البريد وكلمة المرور.');
     }
   });
 
@@ -207,7 +202,7 @@ import {
       showStatus(authStatus, 'تم تسجيل الخروج.');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر تسجيل الخروج. حاول مرة أخرى.');
+      showStatus(authStatus, 'تعذر تسجيل الخروج.');
     }
   });
 
@@ -216,11 +211,18 @@ import {
     authUserText.textContent = loggedIn
       ? 'مسجّل الدخول: ' + user.email
       : 'لم يتم تسجيل الدخول بعد.';
+    
     signOutBtn.hidden = !loggedIn;
-    document.getElementById('signInBtn').hidden = loggedIn;
-    document.getElementById('signUpBtn').hidden = loggedIn;
+    signInBtn.hidden = loggedIn;
+    signUpBtn.hidden = loggedIn;
+    
     authEmail.disabled = loggedIn;
     authPassword.disabled = loggedIn;
+    
+    if (!loggedIn) {
+      authEmail.value = '';
+      authPassword.value = '';
+    }
   });
 
   subForm.addEventListener('submit', async function(e) {
@@ -251,150 +253,9 @@ import {
       this.reset();
     } catch (err) {
       console.error(err);
-      showStatus(subStatus, 'لم يتم حفظ الطلب. نحتاج ضبط قواعد Firestore أو التأكد من اسم المجموعة.');
+      showStatus(subStatus, 'لم يتم حفظ الطلب. تأكد من قواعد الأمان في Firestore.');
     }
-  });// إعداد لوحة تحكم المالك
-  const ADMIN_EMAIL =
-    "nckfirb7f@gmail.com";
-
-const adminPanel = document.getElementById('adminPanel');
-const requestsList = document.getElementById('requestsList');
-const loadRequestsBtn = document.getElementById('loadRequestsBtn');
-const adminCount = document.getElementById('adminCount');
-const saveCountBtn = document.getElementById('saveCountBtn');
-
-function escapeHTML(value) {
-  return String(value ?? '').replace(/[&<>"']/g, c => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  })[c]);
-}
-
-// التحقق من حساب المالك
-onAuthStateChanged(auth, async (user) => {
-  const isAdmin = user &&
-    user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-
-  adminPanel.hidden = !isAdmin;
-
-  if (user) {
-    try {
-      const snap = await getDoc(doc(db, 'settings', 'public'));
-      const count = snap.exists()
-        ? Number(snap.data().subscriber_count || 0)
-        : 0;
-
-      document.getElementById('countDisplay').innerHTML =
-        '<strong>عدد المشتركين: ' + count + '</strong>';
-    } catch (err) {
-      console.error(err);
-    }
-  }
-});
-
-// تحميل طلبات الاشتراك
-loadRequestsBtn.addEventListener('click', async () => {
-  if (auth.currentUser?.email?.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()) return;
-
-  requestsList.textContent = 'جاري تحميل الطلبات...';
-
-  try {
-    const snap = await getDocs(
-      collection(db, 'subscription_requests')
-    );
-
-    requestsList.innerHTML = '';
-
-    if (snap.empty) {
-      requestsList.textContent = 'لا توجد طلبات اشتراك.';
-      return;
-    }
-
-    snap.forEach(item => {
-      const data = item.data();
-
-      const div = document.createElement('div');
-      div.className = 'card';
-
-      div.innerHTML = `
-        <p>الاسم: ${escapeHTML(data.user_name)}</p>
-        <p>الموقع: ${escapeHTML(data.user_location)}</p>
-        <p>الرسالة: ${escapeHTML(data.message)}</p>
-        <p>البريد: ${escapeHTML(data.user_email)}</p>
-        <p>الحالة: ${escapeHTML(data.admin_decision)}</p>
-        <button class="btn" data-action="approved"
-          data-id="${escapeHTML(item.id)}">قبول</button>
-        <button class="btn secondary" data-action="rejected"
-          data-id="${escapeHTML(item.id)}">رفض</button>
-      `;
-
-      requestsList.appendChild(div);
-    });
-
-  } catch (err) {
-    console.error(err);
-    requestsList.textContent = 'تعذر تحميل الطلبات.';
-  }
-});
-
-// قبول أو رفض الطلب
-requestsList.addEventListener('click', async (e) => {
-  const btn = e.target.closest('button[data-action]');
-  if (!btn) return;
-
-  if (auth.currentUser?.email?.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()) return;
-
-  try {
-    await updateDoc(
-      doc(db, 'subscription_requests', btn.dataset.id),
-      { admin_decision: btn.dataset.action }
-    );
-
-    btn.closest('.card').querySelector('p:nth-child(5)')
-      .textContent = 'الحالة: ' + btn.dataset.action;
-
-    btn.closest('.card').querySelectorAll('button')
-      .forEach(b => b.disabled = true);
-
-  } catch (err) {
-    console.error(err);
-    alert('تعذر تحديث الطلب. تحقق من صلاحيات Firestore.');
-  }
-});
-
-// حفظ عدد المشتركين
-saveCountBtn.addEventListener('click', async () => {
-  if (auth.currentUser?.email?.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()) return;
-
-  const count = Number(adminCount.value);
-
-  if (!Number.isInteger(count) || count < 0) {
-    alert('أدخل عدداً صحيحاً.');
-    return;
-  }
-
-  try {
-    await setDoc(
-      doc(db, 'settings', 'public'),
-      { subscriber_count: count },
-      { merge: true }
-    );
-
-    document.getElementById('countDisplay').innerHTML =
-      '<strong>عدد المشتركين: ' + count + '</strong>';
-
-    alert('تم حفظ عدد المشتركين.');
-  } catch (err) {
-    console.error(err);
-    alert('تعذر الحفظ. تحقق من صلاحيات Firestore.');
-  }
-});
+  });
 </script>
 
 </body>
