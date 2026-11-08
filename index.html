@@ -89,12 +89,12 @@
   </section>
 
   <section class="card adminbox">
-    <h2>لوحة تحكم المالك (لتغيير عدد المشتركين)</h2>
+    <h2>لوحة تحكم المالك (تحديد عدد المشتركين)</h2>
     <p class="muted">اكتب العدد الذي تريد أن يظهر للزوار في الأعلى، ثم اضغط تحديث.</p>
     <label for="count">العدد المطلوب عرضه</label>
     <input class="field" id="count" type="number" min="0" value="500">
     <button class="btn" onclick="updateCount()">تحديث وإظهار العدد للجميع</button>
-    <p class="muted" style="margin-top:10px;">العدد الحالي المعروض في القناة: <strong id="countDisplay">500</strong></p>
+    <p class="muted" style="margin-top:10px;">العدد الحالي المعروض: <strong id="countDisplay">500</strong></p>
   </section>
 
   <div class="footer">VIP Channel · يتطلب تسجيل الدخول واتصال Firebase</div>
@@ -112,10 +112,10 @@ function updateCount(){
  const n = Math.max(0, Number(document.getElementById('count').value) || 0);
  document.getElementById('countDisplay').textContent = n;
  document.getElementById('globalCountDisplay').textContent = n;
- localStorage.setItem('custom_sub_count', n); // لحفظ العدد حتى لو تم تحديث الصفحة
+ localStorage.setItem('custom_sub_count', n);
+ alert('تم تحديث عدد المشتركين بنجاح!');
 }
 
-// استرجاع العدد المحفوظ عند فتح الصفحة
 window.addEventListener('DOMContentLoaded', () => {
   const savedCount = localStorage.getItem('custom_sub_count');
   if (savedCount !== null) {
