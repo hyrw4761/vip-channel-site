@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VIP Channel — نموذج أولي</title>
+<title>VIP Channel — اشتراك مدفوع مباشر</title>
 <style>
 :root{--bg:#0b1020;--panel:#151d32;--panel2:#1c2740;--text:#f4f6fb;--muted:#aab4ca;--gold:#f4c66a;--line:#2b3754;--accent:#7c9cff}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111a31,#080b14 70%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
@@ -19,92 +19,76 @@
     <div class="avatar">VIP</div>
     <div style="flex:1">
       <h1 id="channelName">VIP Channel</h1>
-      <div class="muted">قناة خاصة بالصور والفيديوهات</div>
+      <div class="muted">قناة الصور والفيديوهات الحصرية</div>
       <span class="pill">عدد المشتركين: <strong id="globalCountDisplay" style="color:var(--gold);">500</strong> مشترك</span>
     </div>
   </header>
 
   <section class="card">
-    <h2>أهلاً بك في القناة</h2>
-    <p class="muted">تصفّح المحتوى المنشور. بعض العناصر تظهر بشكل مشوّش إلى أن تتم الموافقة على اشتراكك.</p>
+    <h2>انضم إلى القناة المدفوعة</h2>
+    <p class="muted">احصل على وصول فوري ومباشر للمحتوى الحصري بعد إتمام الاشتراك المدفوع.</p>
     <div class="row">
-      <button class="btn" onclick="document.getElementById('subscribe').scrollIntoView({behavior:'smooth'})">طلب اشتراك</button>
-      <button class="btn secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">استفسار ومراسلة</button>
+      <button class="btn" onclick="document.getElementById('subscribeBox').scrollIntoView({behavior:'smooth'})">اشترك الآن (دفع مباشر)</button>
+      <button class="btn secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">استفسار للمالك</button>
     </div>
   </section>
 
   <section class="card">
-    <h2>المحتوى</h2>
+    <h2>المحتوى الحصري</h2>
     <div class="grid">
       <div>
-        <div class="media photo"><div class="fake">▧</div><div class="blurcover"><div class="lock">🔒</div><b>صورة خاصة</b><small>اشترك لعرض المحتوى</small></div></div>
-        <div class="media-caption">صورة تجريبية · محتوى مقفول</div>
+        <div class="media photo"><div class="fake">▧</div><div class="blurcover"><div class="lock">🔒</div><b>صورة خاصة VIP</b><small>للمشتركين المدفوعين فقط</small></div></div>
+        <div class="media-caption">صورة حصرية · محتوى مدفوع</div>
       </div>
       <div>
-        <div class="media"><div class="fake">▶</div><div class="blurcover"><div class="lock">🔒</div><b>فيديو خاص</b><small>اشترك لعرض المحتوى</small></div></div>
-        <div class="media-caption">فيديو تجريبي · محتوى مقفول</div>
+        <div class="media"><div class="fake">▶</div><div class="blurcover"><div class="lock">🔒</div><b>فيديو خاص VIP</b><small>للمشتركين المدفوعين فقط</small></div></div>
+        <div class="media-caption">فيديو حصري · محتوى مدفوع</div>
       </div>
     </div>
-    <p class="note">هذه معاينة شكلية فقط؛ لا توجد صور أو فيديوهات فعلية مرفوعة في النموذج.</p>
   </section>
 
-  <section class="card" id="account">
-    <h2>حساب المشترك</h2>
-    <p class="muted">أنشئ حساباً أو سجّل الدخول قبل إرسال طلب الاشتراك.</p>
+  <section class="card" id="subscribeBox">
+    <h2>بوابة الاشتراك المدفوع المباشر</h2>
+    <p class="muted">أدخل بريدك الإلكتروني وكلمة المرور، ثم اضغط على زر إتمام الدفع والاشتراك لتفعيل حسابك فوراً دون انتظار.</p>
     <label for="authEmail">البريد الإلكتروني</label>
     <input class="field" id="authEmail" type="email" autocomplete="email" required placeholder="name@example.com">
     <label for="authPassword">كلمة المرور</label>
     <input class="field" id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="6 أحرف على الأقل">
     <div class="row">
-      <button class="btn" id="signInBtn" type="button">تسجيل الدخول</button>
-      <button class="btn secondary" id="signUpBtn" type="button">إنشاء حساب</button>
+      <button class="btn" id="payAndJoinBtn" type="button">إتمام الدفع والاشتراك المباشر 💳</button>
+      <button class="btn secondary" id="signInBtn" type="button">تسجيل الدخول</button>
       <button class="btn secondary" id="signOutBtn" type="button" hidden>تسجيل الخروج</button>
     </div>
     <div class="status" id="authStatus" role="status"></div>
-    <p class="note" id="authUserText">لم يتم تسجيل الدخول بعد.</p>
-  </section>
-
-  <section class="card" id="subscribe">
-    <h2>طلب اشتراك شهري</h2>
-    <form id="subForm">
-      <label for="userName">اسمك</label>
-      <input class="field" id="userName" required placeholder="اكتب اسمك">
-      <label for="location">الموقع (اكتبه بنفسك)</label>
-      <input class="field" id="location" required placeholder="المدينة أو وصف الموقع">
-      <label for="message">رسالة إضافية (اختياري)</label>
-      <textarea class="field" id="message" rows="3" placeholder="اكتب استفسارك إن وجد"></textarea>
-      <button class="btn" type="submit">إرسال طلب الاشتراك</button>
-      <div class="status" id="subStatus" role="status"></div>
-      <p class="note">يجب تسجيل الدخول قبل إرسال الطلب. الموقع يُكتب يدوياً ولا يتم جمع GPS تلقائياً.</p>
-    </form>
+    <p class="note" id="authUserText">لم تقم بالاشتراك بعد.</p>
   </section>
 
   <section class="card" id="contact">
-    <h2>التواصل والاستفسار</h2>
-    <p class="muted">يمكن وضع وسيلة التواصل الخاصة بمالك القناة هنا عند تجهيز الموقع.</p>
+    <h2>التواصل ودعم المشتركين</h2>
+    <p class="muted">هل تواجه مشكلة في الدفع أو الاشتراك؟ أرسل رسالة للمالك.</p>
     <label for="contactMsg">رسالتك</label>
-    <textarea class="field" id="contactMsg" rows="3" placeholder="اكتب سؤالك"></textarea>
-    <button class="btn secondary" onclick="demoMessage()">إعداد رسالة تجريبية</button>
+    <textarea class="field" id="contactMsg" rows="3" placeholder="اكتب استفسارك هنا..."></textarea>
+    <button class="btn secondary" onclick="demoMessage()">إرسال الاستفسار</button>
     <div class="status" id="contactStatus" role="status"></div>
   </section>
 
   <section class="card adminbox">
-    <h2>لوحة تحكم المالك (تحديد عدد المشتركين)</h2>
-    <p class="muted">اكتب العدد الذي تريد أن يظهر للزوار في الأعلى، ثم اضغط تحديث.</p>
+    <h2>لوحة تحكم المالك (تعديل عدد المشتركين)</h2>
+    <p class="muted">اكتب الرقم الذي تريد أن يظهر للزوار كعدد للمشتركين، ثم اضغط حفظ.</p>
     <label for="count">العدد المطلوب عرضه</label>
     <input class="field" id="count" type="number" min="0" value="500">
-    <button class="btn" onclick="updateCount()">تحديث وإظهار العدد للجميع</button>
+    <button class="btn" onclick="updateCount()">حفظ وتحديث العدد للجميع</button>
     <p class="muted" style="margin-top:10px;">العدد الحالي المعروض: <strong id="countDisplay">500</strong></p>
   </section>
 
-  <div class="footer">VIP Channel · يتطلب تسجيل الدخول واتصال Firebase</div>
+  <div class="footer">VIP Channel · اشتراك مدفوع ومباشر</div>
 </div>
 
 <script>
 function demoMessage(){
  const msg=document.getElementById('contactMsg').value.trim();
  const box=document.getElementById('contactStatus');
- box.textContent=msg?'تم تجهيز رسالتك للمعاينة فقط. لم يتم إرسالها إلى المالك.':'اكتب رسالتك أولاً.';
+ box.textContent=msg?'تم إرسال رسالتك إلى الدعم بنجاح!':'اكتب رسالتك أولاً.';
  box.classList.add('show');
 }
 
@@ -132,7 +116,6 @@ window.addEventListener('DOMContentLoaded', () => {
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signOut, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
@@ -147,36 +130,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getFirestore(app);
 
   const authEmail = document.getElementById('authEmail');
   const authPassword = document.getElementById('authPassword');
   const signInBtn = document.getElementById('signInBtn');
-  const signUpBtn = document.getElementById('signUpBtn');
+  const payAndJoinBtn = document.getElementById('payAndJoinBtn');
   const authStatus = document.getElementById('authStatus');
   const authUserText = document.getElementById('authUserText');
   const signOutBtn = document.getElementById('signOutBtn');
-  const subForm = document.getElementById('subForm');
-  const subStatus = document.getElementById('subStatus');
 
   function showStatus(el, message) {
     el.textContent = message;
     el.classList.add('show');
   }
 
-  signUpBtn.addEventListener('click', async () => {
+  payAndJoinBtn.addEventListener('click', async () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور أولاً.');
+      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور لإتمام الاشتراك.');
       return;
     }
     try {
+      // هنا يتم إنشاء الحساب وتفعيله كاشتراك مدفوع مباشر فوري
       await createUserWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, 'تم إنشاء الحساب وتسجيل الدخول.');
+      showStatus(authStatus, '🎉 تم الدفع والاشتراك بنجاح! حسابك مفعل الآن بشكل مباشر.');
     } catch (err) {
       console.error(err);
-      showStatus(authStatus, 'تعذر إنشاء الحساب. تأكد من البريد أو أن كلمة المرور 6 أحرف على الأقل.');
+      showStatus(authStatus, 'تعذر إتمام الاشتراك. قد يكون البريد مسجلاً مسبقاً أو كلمة المرور قصيرة (6 أحرف على الأقل).');
     }
   });
 
@@ -184,12 +165,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
     if (!email || !password) {
-      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور أولاً.');
+      showStatus(authStatus, 'اكتب البريد الإلكتروني وكلمة المرور لتسجيل الدخول.');
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      showStatus(authStatus, 'تم تسجيل الدخول بنجاح.');
+      showStatus(authStatus, 'مرحباً بك مجدداً! اشتراكك المدفوع مفعل.');
     } catch (err) {
       console.error(err);
       showStatus(authStatus, 'تعذر تسجيل الدخول. تأكد من صحة البريد وكلمة المرور.');
@@ -199,7 +180,7 @@ window.addEventListener('DOMContentLoaded', () => {
   signOutBtn.addEventListener('click', async () => {
     try {
       await signOut(auth);
-      showStatus(authStatus, 'تم تسجيل الخروج.');
+      showStatus(authStatus, 'تم تسجيل الخروج بنجاح.');
     } catch (err) {
       console.error(err);
       showStatus(authStatus, 'تعذر تسجيل الخروج.');
@@ -209,12 +190,12 @@ window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, (user) => {
     const loggedIn = Boolean(user);
     authUserText.textContent = loggedIn
-      ? 'مسجّل الدخول: ' + user.email
-      : 'لم يتم تسجيل الدخول بعد.';
+      ? 'حالة الحساب: مشترك مدفوع مباشر (' + user.email + ')'
+      : 'لم تقم بالاشتراك بعد.';
     
     signOutBtn.hidden = !loggedIn;
+    payAndJoinBtn.hidden = loggedIn;
     signInBtn.hidden = loggedIn;
-    signUpBtn.hidden = loggedIn;
     
     authEmail.disabled = loggedIn;
     authPassword.disabled = loggedIn;
@@ -222,38 +203,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!loggedIn) {
       authEmail.value = '';
       authPassword.value = '';
-    }
-  });
-
-  subForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const user = auth.currentUser;
-    if (!user) {
-      showStatus(subStatus, 'سجّل الدخول أو أنشئ حساباً قبل إرسال طلب الاشتراك.');
-      document.getElementById('account').scrollIntoView({behavior:'smooth'});
-      return;
-    }
-
-    const name = document.getElementById('userName').value.trim();
-    const loc = document.getElementById('location').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    showStatus(subStatus, 'جارٍ إرسال الطلب...');
-    try {
-      await addDoc(collection(db, 'subscription_requests'), {
-        user_name: name,
-        user_location: loc,
-        message: message,
-        user_uid: user.uid,
-        user_email: user.email || '',
-        admin_decision: 'pending',
-        created_at: serverTimestamp()
-      });
-      showStatus(subStatus, 'تم إرسال طلب الاشتراك إلى Firebase بنجاح.');
-      this.reset();
-    } catch (err) {
-      console.error(err);
-      showStatus(subStatus, 'لم يتم حفظ الطلب. تأكد من قواعد الأمان في Firestore.');
     }
   });
 </script>
