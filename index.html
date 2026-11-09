@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Telegram VIP Channels</title>
 <style>
-:root{--tg-bg:#0e1621;--tg-panel:#17212b;--tg-panel2:#232e3c;--tg-text:#f5f5f5;--tg-muted:#879097;--tg-blue:#2ea6ff;--tg-gold:#ecca59;--tg-border:#0b1118}
+:root{--tg-bg:#0e1621;--tg-panel:#17212b;--tg-panel2:#232e3c;--tg-text:#f5f5f5;--tg-muted:#879097;--tg-blue:#2ea6ff;--tg-gold:#ecca59;--tg-red:#ef4444;--tg-border:#0b1118}
 *{box-sizing:border-box}
 body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5;
 -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
@@ -23,9 +23,10 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
 .chat-title{font-weight:600;font-size:15px;color:var(--tg-text);display:flex;justify-content:space-between}
 .chat-preview{font-size:13px;color:var(--tg-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
 
-.channel-view{display:none;flex-direction:column;height:100vh;background:#0f1721;position:fixed;inset:0;z-index:100;max-width:600px;margin:auto}
-.tg-chat-header{background:var(--tg-panel);padding:10px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--tg-border)}
-.back-btn{background:none;border:0;color:var(--tg-blue);font-size:16px;font-weight:600;cursor:pointer;padding:0}
+/* تحسين نافذة عرض القناة وحل مشكلة الجزء العلوي */
+.channel-view{display:none;flex-direction:column;height:100vh;background:#0f1721;position:fixed;inset:0;z-index:1000;max-width:600px;margin:auto;overflow:hidden}
+.tg-chat-header{background:var(--tg-panel);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--tg-border);flex-shrink:0;z-index:1001;min-height:60px}
+.back-btn{background:none;border:0;color:var(--tg-blue);font-size:16px;font-weight:600;cursor:pointer;padding:4px 8px}
 .chat-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
 .msg-bubble{background:var(--tg-panel);padding:10px 14px;border-radius:12px;max-width:85%;word-break:break-word;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .msg-bubble.admin{background:#1b365d;align-self:flex-start}
@@ -33,6 +34,7 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
 .tg-card{background:var(--tg-panel);border-radius:12px;padding:14px;margin:12px;border:1px solid var(--tg-border)}
 .tg-btn{background:var(--tg-blue);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer;width:100%;text-align:center;text-decoration:none;display:inline-block}
 .tg-btn.secondary{background:var(--tg-panel2);color:var(--tg-text)}
+.tg-btn.danger{background:var(--tg-red);color:#fff}
 .tg-field{background:var(--tg-bg);border:1px solid var(--tg-border);color:var(--tg-text);padding:10px 12px;border-radius:8px;width:100%;margin:6px 0 12px;font:inherit;outline:none}
 .tg-footer{text-align:center;color:var(--tg-muted);font-size:11px;padding:20px}
 </style>
@@ -62,9 +64,12 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
     <button class="tg-btn secondary" id="btnLogoutAdmin" style="margin-bottom:10px;background:#ef4444;color:#fff;">إغلاق وضع المالك وخروج</button>
     
     <div style="border-top:1px solid var(--tg-border);padding-top:10px;margin-top:10px;">
-      <label style="font-size:12px;color:var(--tg-muted);">إنشاء قناة جديدة:</label>
+      <label style="font-size:12px;color:var(--tg-gold);">➕ إنشاء قناة جديدة:</label>
       <input class="tg-field" id="newCName" type="text" placeholder="اسم القناة...">
-      <input class="tg-field" id="newCImg" type="url" placeholder="رابط صورة القناة...">
+      
+      <label style="font-size:11px;color:var(--tg-muted);">صورة أيقونة القناة من الاستوديو:</label>
+      <input class="tg-field" id="newCImgFile" type="file" accept="image/*" style="padding:4px;font-size:12px;">
+
       <input class="tg-field" id="newCMonth" type="number" placeholder="سعر الاشتراك الشهري ($)..." value="10">
       <input class="tg-field" id="newCLife" type="number" placeholder="سعر الاشتراك المفتوح ($)..." value="45">
       <input class="tg-field" id="newCPay" type="url" placeholder="رابط حسابك البنكي لدفع الزبائن...">
@@ -87,246 +92,13 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
 </div>
 
 <div class="channel-view" id="channelViewModal">
+  <!-- هيدر القناة العلوي واضع تماماً ومحمي -->
   <div class="tg-chat-header">
     <button class="back-btn" id="btnBackToHome">← رجوع</button>
     <img id="modalChanImg" src="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
     <div style="flex:1;">
-      <h3 id="modalChanTitle" style="margin:0;font-size:15px;">اسم القناة</h3>
+      <h3 id="modalChanTitle" style="margin:0;font-size:15px;color:var(--tg-text);">اسم القناة</h3>
       <span style="font-size:11px;color:var(--tg-muted);" id="modalChanSub">قناة محمية</span>
     </div>
-  </div>
-
-  <div id="ownerPublishBox" style="display:none;background:var(--tg-panel);padding:10px 16px;border-bottom:1px solid var(--tg-border);">
-    <textarea class="tg-field" id="postText" rows="2" placeholder="اكتب رسالة أو منشور..."></textarea>
-    <input class="tg-field" id="postFile" type="file" accept="image/*,video/*" style="padding:4px;font-size:12px;">
-    <button class="tg-btn" id="btnPublishPost" style="padding:6px;font-size:13px;" type="button">نشر في القناة 🚀</button>
-  </div>
-
-  <div class="chat-messages" id="chatMessagesArea"></div>
-
-  <div id="payGateBox" style="background:var(--tg-panel);padding:14px;border-top:1px solid var(--tg-border);text-align:center;">
-    <p style="margin:0 0 8px 0;font-size:13px;">هذه القناة مدفوعة. اختر نوع الاشتراك:</p>
-    <select class="tg-field" id="subTypeChoice" style="margin-bottom:8px;">
-      <option value="monthly">اشتراك شهري (<span id="txtMonthlyPrice">10</span>$)</option>
-      <option value="lifetime">اشتراك دائم مفتوح (<span id="txtLifePrice">45</span>$)</option>
-    </select>
-    <a href="#" id="bankPayBtn" target="_blank" class="tg-btn" style="background:var(--tg-blue);">دفع قيمة الاشتراك عبر حساب المالك البنكي 💳</a>
-  </div>
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
-    authDomain: "vip-channel-b726b.firebaseapp.com",
-    databaseURL: "https://vip-channel-b726b-default-rtdb.firebaseio.com",
-    projectId: "vip-channel-b726b",
-    storageBucket: "vip-channel-b726b.firebasestorage.app",
-    messagingSenderId: "580276993013",
-    appId: "1:580276993013:web:dbda819bd9d0f4e94e7ebc",
-    measurementId: "G-QLE5VPN8FP"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  let isOwner = localStorage.getItem('is_site_owner') === 'true';
-  let currentChanId = null;
-  let currentUserEmail = null;
-
-  const ADMIN_SECRET = "admin123";
-
-  let channels = JSON.parse(localStorage.getItem('tg_channels')) || [
-    { id: 1, name: 'قناة الأفلام الحصرية', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100', monthly: 10, lifetime: 45, payLink: 'https://www.paypal.com', posts: [] },
-    { id: 2, name: 'قناة التقنية والمحترفين', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=100', monthly: 8, lifetime: 35, payLink: 'https://www.paypal.com', posts: [] }
-  ];
-
-  function applyOwnerUIMode() {
-      if(isOwner) {
-          document.getElementById('adminLoginCard').style.display = 'none';
-          document.getElementById('ownerPanelContainer').style.display = 'block';
-          document.getElementById('ownerPublishBox').style.display = 'block';
-      } else {
-          document.getElementById('adminLoginCard').style.display = 'block';
-          document.getElementById('ownerPanelContainer').style.display = 'none';
-          document.getElementById('ownerPublishBox').style.display = 'none';
-      }
-      if(currentChanId) openChannel(currentChanId);
-  }
-
-  function renderChatList() {
-      const list = document.getElementById('chatsListContainer');
-      list.innerHTML = '';
-      channels.forEach(c => {
-          let lastMsg = c.posts && c.posts.length > 0 ? c.posts[0].text : 'انقر للدخول وعرض المحتوى الحصري...';
-          const div = document.createElement('div');
-          div.className = 'chat-item';
-          div.addEventListener('click', () => openChannel(c.id));
-          div.innerHTML = `
-              <img src="${c.img}" class="chat-avatar">
-              <div class="chat-info">
-                  <div class="chat-title"><span>${c.name}</span> <span style="font-size:11px;color:var(--tg-blue);">VIP</span></div>
-                  <div class="chat-preview">${lastMsg}</div>
-              </div>
-          `;
-          list.appendChild(div);
-      });
-  }
-
-  function openChannel(id) {
-      const c = channels.find(x => x.id === id);
-      if(!c) return;
-      currentChanId = id;
-
-      document.getElementById('modalChanTitle').textContent = c.name;
-      document.getElementById('modalChanImg').src = c.img;
-      document.getElementById('txtMonthlyPrice').textContent = c.monthly;
-      document.getElementById('txtLifePrice').textContent = c.lifetime;
-      document.getElementById('bankPayBtn').href = c.payLink || '#';
-
-      renderMessages(c);
-      
-      // التحقق هل المشترك اشترك في هذه القناة بالذات (أو هو المالك)
-      let isSubscribed = false;
-      if(currentUserEmail) {
-          isSubscribed = localStorage.getItem('sub_' + currentUserEmail + '_chan_' + id) === 'true';
-      }
-
-      if(isOwner || isSubscribed) {
-          document.getElementById('payGateBox').style.display = 'none';
-      } else {
-          document.getElementById('payGateBox').style.display = 'block';
-      }
-
-      document.getElementById('channelViewModal').style.display = 'flex';
-  }
-
-  function renderMessages(c) {
-      const area = document.getElementById('chatMessagesArea');
-      area.innerHTML = '';
-      if(c.posts && c.posts.length > 0) {
-          c.posts.forEach(p => {
-              const b = document.createElement('div');
-              b.className = 'msg-bubble admin';
-              let h = `<p style="margin:0;">${p.text}</p>`;
-              if(p.type === 'image') h += `<img src="${p.media}" style="width:100%;max-height:250px;border-radius:8px;margin-top:6px;object-fit:cover;">`;
-              if(p.type === 'video') h += `<video src="${p.media}" controls style="width:100%;max-height:250px;border-radius:8px;margin-top:6px;"></video>`;
-              b.innerHTML = h;
-              area.appendChild(b);
-          });
-      } else {
-          area.innerHTML = `<div style="text-align:center;color:var(--tg-muted);font-size:13px;margin-top:20px;">لا توجد منشورات في هذه القناة بعد.</div>`;
-      }
-  }
-
-  document.getElementById('btnLoginAdmin').addEventListener('click', () => {
-      const pass = document.getElementById('adminPassInput').value;
-      if(pass === ADMIN_SECRET) {
-          isOwner = true;
-          localStorage.setItem('is_site_owner', 'true');
-          applyOwnerUIMode();
-          alert('أهلاً بك يا مالك الموقع! تم تفعيل صلاحياتك بنجاح.');
-      } else {
-          alert('كلمة مرور المالك غير صحيحة!');
-      }
-  });
-
-  document.getElementById('btnLogoutAdmin').addEventListener('click', () => {
-      isOwner = false;
-      localStorage.removeItem('is_site_owner');
-      applyOwnerUIMode();
-      alert('تم تسجيل خروج المالك.');
-  });
-
-  document.getElementById('btnAddChannel').addEventListener('click', () => {
-      const name = document.getElementById('newCName').value.trim();
-      const img = document.getElementById('newCImg').value.trim();
-      const monthly = Number(document.getElementById('newCMonth').value) || 10;
-      const lifetime = Number(document.getElementById('newCLife').value) || 45;
-      const payLink = document.getElementById('newCPay').value.trim() || '#';
-
-      if(!name || !img) { alert('أدخل اسم القناة ورابط الصورة.'); return; }
-
-      channels.push({ id: Date.now(), name, img, monthly, lifetime, payLink, posts: [] });
-      localStorage.setItem('tg_channels', JSON.stringify(channels));
-      renderChatList();
-      alert('تم إنشاء القناة بنجاح!');
-  });
-
-  document.getElementById('btnBackToHome').addEventListener('click', () => {
-      document.getElementById('channelViewModal').style.display = 'none';
-  });
-
-  document.getElementById('btnPublishPost').addEventListener('click', () => {
-      if(!isOwner) return;
-      const text = document.getElementById('postText').value.trim();
-      const fileInput = document.getElementById('postFile');
-
-      if(!text && fileInput.files.length === 0) { alert('أكتب نصاً أو اختر ملفاً.'); return; }
-
-      const c = channels.find(x => x.id === currentChanId);
-      if(!c) return;
-
-      if(fileInput.files.length > 0) {
-          const file = fileInput.files[0];
-          const reader = new FileReader();
-          reader.onload = function(e) {
-              const media = e.target.result;
-              const type = file.type.startsWith('video') ? 'video' : 'image';
-              if(!c.posts) c.posts = [];
-              c.posts.unshift({ text, media, type });
-              localStorage.setItem('tg_channels', JSON.stringify(channels));
-              openChannel(currentChanId);
-              renderChatList();
-              document.getElementById('postText').value = '';
-              fileInput.value = '';
-              alert('تم النشر بنجاح!');
-          };
-          reader.readAsDataURL(file);
-      } else {
-          if(!c.posts) c.posts = [];
-          c.posts.unshift({ text, media: '', type: 'text' });
-          localStorage.setItem('tg_channels', JSON.stringify(channels));
-          openChannel(currentChanId);
-          renderChatList();
-          document.getElementById('postText').value = '';
-          alert('تم النشر بنجاح!');
-      }
-  });
-
-  document.getElementById('signUpBtn').addEventListener('click', async () => {
-      const email = document.getElementById('authEmail').value.trim();
-      const pass = document.getElementById('authPassword').value;
-      if(!email || !pass) { alert('أدخل البريد وكلمة المرور.'); return; }
-      try {
-          const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-          currentUserEmail = userCred.user.email;
-          if(currentChanId) {
-              // حفظ الاشتراك لهذه القناة فقط الخاصة بهذا الحساب
-              localStorage.setItem('sub_' + currentUserEmail + '_chan_' + currentChanId, 'true');
-              openChannel(currentChanId);
-          }
-          document.getElementById('authStatus').textContent = '🎉 تم إنشاء حسابك وتفعيل اشتراكك في هذه القناة!';
-      } catch(e) { document.getElementById('authStatus').textContent = 'تعذر إنشاء الحساب (البريد مستخدم مسبقاً أو كلمة المرور قصيرة).'; }
-  });
-
-  document.getElementById('signInBtn').addEventListener('click', async () => {
-      const email = document.getElementById('authEmail').value.trim();
-      const pass = document.getElementById('authPassword').value;
-      if(!email || !pass) { alert('أدخل البريد وكلمة المرور.'); return; }
-      try {
-          const userCred = await signInWithEmailAndPassword(auth, email, pass);
-          currentUserEmail = userCred.user.email;
-          if(currentChanId) openChannel(currentChanId);
-          document.getElementById('authStatus').textContent = 'مرحباً بك! تم استعادة اشتراكاتك.';
-      } catch(e) { document.getElementById('authStatus').textContent = 'خطأ في البريد أو كلمة المرور.'; }
-  });
-
-  renderChatList();
-  applyOwnerUIMode();
-</script>
-
-</body>
-</html>
+    <!-- زر حذف القناة يظهر للمالك فقط -->
+    <button class="tg-btn danger" id="btnDeleteCurrentChannel" style="display:none;width:auto;padding:6px 
