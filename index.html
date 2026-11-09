@@ -50,11 +50,20 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
 
   <div class="chat-list" id="chatsListContainer"></div>
 
-  <div class="tg-card">
-    <h3 style="margin:0 0 10px 0;font-size:15px;color:var(--tg-gold);">⚙️ لوحة المالك وإدارة الحساب</h3>
-    <button class="tg-btn secondary" id="btnToggleOwner" style="margin-bottom:10px;">🔓 تفعيل/إلغاء وضع المالك</button>
+  <!-- بوابة تسجيل دخول المالك السرية (مخفية عن الزوار) -->
+  <div class="tg-card" id="adminLoginCard">
+    <h3 style="margin:0 0 8px 0;font-size:14px;color:var(--tg-gold);">🔐 بوابة المالك السرية</h3>
+    <p style="font-size:12px;color:var(--tg-muted);margin:0 0 8px 0;">هذه اللوحة مخفية عن الزوار. أضف كلمة المرور السرية لتظهر لوحة تحكم القنوات والنشر:</p>
+    <input class="tg-field" id="adminPassInput" type="password" placeholder="كلمة مرور المالك السرية...">
+    <button class="tg-btn secondary" id="btnLoginAdmin">دخول كمالك</button>
+  </div>
+
+  <!-- لوحة المالك (تظهر حصرياً بعد إدخال كلمة السر الصحيحة) -->
+  <div class="tg-card" id="ownerPanelContainer" style="display:none;">
+    <h3 style="margin:0 0 10px 0;font-size:15px;color:var(--tg-gold);">⚙️ لوحة تحكم المالك وإنشاء القنوات</h3>
+    <button class="tg-btn secondary" id="btnLogoutAdmin" style="margin-bottom:10px;background:#ef4444;color:#fff;">إغلاق وضع المالك وخروج</button>
     
-    <div id="ownerPanel" style="display:none;border-top:1px solid var(--tg-border);padding-top:10px;margin-top:10px;">
+    <div style="border-top:1px solid var(--tg-border);padding-top:10px;margin-top:10px;">
       <label style="font-size:12px;color:var(--tg-muted);">إنشاء قناة جديدة:</label>
       <input class="tg-field" id="newCName" type="text" placeholder="اسم القناة...">
       <input class="tg-field" id="newCImg" type="url" placeholder="رابط صورة القناة...">
@@ -66,7 +75,7 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
   </div>
 
   <div class="tg-card">
-    <h3 style="margin:0 0 8px 0;font-size:14px;">🔐 حفظ اشتراكك في حسابك</h3>
+    <h3 style="margin:0 0 8px 0;font-size:14px;">🔐 حفظ اشتراكك في حسابك (للزوار)</h3>
     <input class="tg-field" id="authEmail" type="email" placeholder="البريد الإلكتروني...">
     <input class="tg-field" id="authPassword" type="password" placeholder="كلمة المرور...">
     <div style="display:flex;gap:8px;">
@@ -125,13 +134,29 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  let isOwner = false;
+  let isOwner = localStorage.getItem('is_site_owner') === 'true';
   let currentChanId = null;
+
+  // كلمة السر الخاصة بك (يمكنك تغيير كلمة admin123 إلى أي كلمة سر قوية تريدها)
+  const ADMIN_SECRET = "admin123";
 
   let channels = JSON.parse(localStorage.getItem('tg_channels')) || [
     { id: 1, name: 'قناة الأفلام الحصرية', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100', monthly: 10, lifetime: 45, payLink: 'https://www.paypal.com', posts: [] },
     { id: 2, name: 'قناة التقنية والمحترفين', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=100', monthly: 8, lifetime: 35, payLink: 'https://www.paypal.com', posts: [] }
   ];
+
+  function applyOwnerUIMode() {
+      if(isOwner) {
+          document.getElementById('adminLoginCard').style.display = 'none';
+          document.getElementById('ownerPanelContainer').style.display = 'block';
+          document.getElementById('ownerPublishBox').style.display = 'block';
+      } else {
+          document.getElementById('adminLoginCard').style.display = 'block';
+          document.getElementById('ownerPanelContainer').style.display = 'none';
+          document.getElementById('ownerPublishBox').style.display = 'none';
+      }
+      if(currentChanId) openChannel(currentChanId);
+  }
 
   function renderChatList() {
       const list = document.getElementById('chatsListContainer');
@@ -193,13 +218,24 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
       }
   }
 
-  // ربط أحداث الأزرار مباشرة لحل مشكلة عدم الاستجابة
-  document.getElementById('btnToggleOwner').addEventListener('click', () => {
-      isOwner = !isOwner;
-      document.getElementById('ownerPanel').style.display = isOwner ? 'block' : 'none';
-      document.getElementById('ownerPublishBox').style.display = isOwner ? 'block' : 'none';
-      if(currentChanId) openChannel(currentChanId);
-      alert(isOwner ? '🔓 تم تفعيل وضع المالك بنجاح!' : 'تم إيقاف وضع المالك.');
+  // تسجيل دخول المالك بكلمة السر
+  document.getElementById('btnLoginAdmin').addEventListener('click', () => {
+      const pass = document.getElementById('adminPassInput').value;
+      if(pass === ADMIN_SECRET) {
+          isOwner = true;
+          localStorage.setItem('is_site_owner', 'true');
+          applyOwnerUIMode();
+          alert('أهلاً بك يا مالك الموقع! تم تفعيل صلاحياتك بنجاح.');
+      } else {
+          alert('كلمة مرور المالك غير صحيحة!');
+      }
+  });
+
+  document.getElementById('btnLogoutAdmin').addEventListener('click', () => {
+      isOwner = false;
+      localStorage.removeItem('is_site_owner');
+      applyOwnerUIMode();
+      alert('تم تسجيل خروج المالك.');
   });
 
   document.getElementById('btnAddChannel').addEventListener('click', () => {
@@ -280,6 +316,7 @@ body{margin:0;background:var(--tg-bg);color:var(--tg-text);font-family:system-ui
   });
 
   renderChatList();
+  applyOwnerUIMode();
 </script>
 
 </body>
