@@ -8,7 +8,7 @@
 :root{--bg:#070a14;--panel:#111827;--panel2:#1f293d;--text:#f9fafb;--muted:#9ca3af;--gold:#f59e0b;--line:#374151;--accent:#3b82f6}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6;
--webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;} /* منع تحديد النصوص وحفظ الصور */
+-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 .wrap{max-width:800px;margin:auto;padding:16px}
 .top{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
 .avatar{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#f59e0b,#d97706);display:grid;place-items:center;color:#000;font-weight:900;font-size:24px}
@@ -30,14 +30,14 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 </style>
 </head>
-<body oncontextmenu="return false;"> <!-- منع النقر بزر الماوس الأيمن لحفظ الصور -->
+<body oncontextmenu="return false;">
 
 <div class="wrap">
   <header class="top">
     <div class="avatar">VIP</div>
     <div style="flex:1">
       <h1 id="platformTitle">شبكة القنوات الحصرية</h1>
-      <div class="muted">محتوى مرئي محمي وعالي الحصرية</div>
+      <div class="muted">محتوى مرئي محمي وعالي الحصرية (دولياً ومحلياً)</div>
       <span style="background:rgba(245,158,11,.1);border:1px solid var(--gold);color:var(--gold);padding:4px 12px;border-radius:99px;font-size:12px;display:inline-block;margin-top:6px;">
         إجمالي المشتركين بالمنصة: <strong id="globalCountDisplay">500</strong>
       </span>
@@ -47,39 +47,45 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
   <!-- قسم اختيار القنوات -->
   <section class="card">
     <h2>📺 اختر القناة التي تريد الاشتراك بها</h2>
-    <p class="muted">تصفح القنوات المتاحة أدناه، اختر القناة المناسبة، وتعرف على الأسعار ونوع الاشتراك.</p>
+    <p class="muted">تصفح القنوات المتاحة، اختر القناة المناسبة، وتعرف على الأسعار العالمية.</p>
     
     <div class="channels-grid" id="channelsContainer">
-        <!-- القناة الأولى -->
         <div class="channel-card">
             <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" class="channel-img" alt="قناة السينما">
             <h3 style="margin:6px 0;font-size:16px;">قناة الأفلام والسينما</h3>
-            <p class="muted" style="font-size:13px;">أحدث الأفلام الحصرية بجودة عالية.</p>
+            <p class="muted" style="font-size:13px;">أحدث الأفلام الحصرية.</p>
             <div style="margin:8px 0;font-size:13px;color:var(--gold);">الشهري: 10$ | المفتوحة: 45$</div>
-            <button class="btn" onclick="selectChannel('قناة الأفلام والسينما')">اختر واشترك</button>
+            <button class="btn" onclick="selectChannel('قناة الأفلام والسينما')">اختر هذه القناة</button>
         </div>
-        <!-- القناة الثانية -->
         <div class="channel-card">
             <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400" class="channel-img" alt="قناة الألعاب">
             <h3 style="margin:6px 0;font-size:16px;">قناة الألعاب والتقنية</h3>
-            <p class="muted" style="font-size:13px;">شروحات وبثوث حصرية للمحترفين.</p>
+            <p class="muted" style="font-size:13px;">بثوث حصرية للمحترفين.</p>
             <div style="margin:8px 0;font-size:13px;color:var(--gold);">الشهري: 8$ | المفتوحة: 35$</div>
-            <button class="btn" onclick="selectChannel('قناة الألعاب والتقنية')">اختر واشترك</button>
+            <button class="btn" onclick="selectChannel('قناة الألعاب والتقنية')">اختر هذه القناة</button>
         </div>
     </div>
   </section>
 
-  <!-- صندوق اختيار نوع الاشتراك والدفع -->
+  <!-- صندوق اختيار نوع الاشتراك والدفع العالمي -->
   <section class="card" id="subSection">
-    <h2>💳 إتمام الاشتراك المباشر</h2>
-    <p class="muted">القناة المحددة: <strong id="selectedChannelName" style="color:var(--gold);">لم يتم الاختار بعد (اختر قناة أعلاه)</strong></p>
+    <h2>💳 الدفع الإلكتروني والاشتراك</h2>
+    <p class="muted">القناة المحددة: <strong id="selectedChannelName" style="color:var(--gold);">لم يتم الاختيار بعد</strong></p>
     
     <label for="subType">اختر نوع الاشتراك:</label>
     <select class="field" id="subType">
-        <option value="monthly">اشتراك شهري (30 يوماً فقط ثم يتطلب التجديد) - السعر: حسب القناة</option>
-        <option value="lifetime">اشتراك مفتوح دائم (لا ينتهي أبداً) - السعر: حسب القناة</option>
+        <option value="monthly">اشتراك شهري (30 يوماً - يتطلب التجديد لاحقاً)</option>
+        <option value="lifetime">اشتراك مفتوح دائم (لا ينتهي أبداً)</option>
     </select>
 
+    <div style="margin: 15px 0; background: rgba(59,130,246,0.1); border: 1px solid var(--accent); padding: 14px; border-radius: 12px; text-align: center;">
+        <p style="margin:0 0 10px 0; font-size: 14px;">الخطوة 1: قم بتحويل المبلغ أو الدفع عبر البطاقة المالية (PayPal / Visa)</p>
+        <!-- ضع هنا رابط الدفع الخاص بك بدلاً من علامة # -->
+        <a href="https://www.paypal.com" target="_blank" class="btn" style="background:var(--accent); color:#fff;">انتقل لبوابة الدفع الإلكتروني 💳</a>
+    </div>
+
+    <p class="muted" style="margin-top:15px;">الخطوة 2: بعد إتمام الدفع، أنشئ حسابك هنا لتفعيل دخولك فوراً:</p>
+    
     <label for="authEmail">البريد الإلكتروني</label>
     <input class="field" id="authEmail" type="email" placeholder="name@example.com">
     
@@ -87,7 +93,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
     <input class="field" id="authPassword" type="password" placeholder="********">
 
     <div class="row">
-      <button class="btn" id="payAndJoinBtn">إتمام الدفع بالبطاقة والاشتراك 💳</button>
+      <button class="btn" id="verifyAndJoinBtn">تأكيد الاشتراك وتفعيل الحساب ✅</button>
       <button class="btn secondary" id="signInBtn">تسجيل الدخول</button>
       <button class="btn secondary" id="signOutBtn" hidden>تسجيل الخروج</button>
     </div>
@@ -95,21 +101,19 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
     <p class="note" id="authUserText" style="margin-top:10px;">لم تقم بتسجيل الدخول بعد.</p>
   </section>
 
-  <!-- لوحة تحكم المالك المرتبة -->
+  <!-- لوحة تحكم المالك -->
   <section class="card adminbox">
     <h2>👑 لوحة تحكم المالك المركزية</h2>
-    <p class="muted">تحكم بعدد المشتركين الظاهر للزوار، وأسعار القنوات، وإعدادات المنصة بكل سهولة.</p>
-    
-    <label for="countInput">تعديل عدد المشتركين الإجمالي الظاهر:</label>
+    <p class="muted">تحكم بعدد المشتركين الإجمالي الظاهر للزوار من مختلف الدول.</p>
+    <label for="countInput">تعديل عدد المشتركين الظاهر:</label>
     <input class="field" id="countInput" type="number" value="500">
-    <button class="btn" onclick="updateGlobalCount()">حفظ وتحديث عدد المشتركين</button>
-    
-    <div style="margin-top:15px;border-top:1px solid var(--line);padding-top:12px;">
-        <p class="muted">الحالة الحالية للعدد المعروض: <strong id="currentDisplayedCount">500</strong></p>
+    <button class="btn" onclick="updateGlobalCount()">حفظ وتحديث العدد</button>
+    <div style="margin-top:12px;">
+        <p class="muted">العدد الحالي المعروض: <strong id="currentDisplayedCount">500</strong></p>
     </div>
   </section>
 
-  <div class="footer">جميع الحقوق محفوظة · محتوى محمي ضد النسخ والتقاط الشاشة</div>
+  <div class="footer">جميع الحقوق محفوظة · منصة محمية دولياً</div>
 </div>
 
 <script>
@@ -118,7 +122,7 @@ let chosenChannel = "لم يتم اختيار قناة بعد";
 function selectChannel(name) {
     chosenChannel = name;
     document.getElementById('selectedChannelName').textContent = name;
-    alert('تم اختيار: ' + name + ' بنجاح. انتقل لأسفل لإتمام الاشتراك.');
+    alert('تم اختيار: ' + name + '. يرجى الانتقال لأسفل لإتمام الدفع والتسجيل.');
     document.getElementById('subSection').scrollIntoView({behavior:'smooth'});
 }
 
@@ -127,7 +131,7 @@ function updateGlobalCount() {
     document.getElementById('globalCountDisplay').textContent = val;
     document.getElementById('currentDisplayedCount').textContent = val;
     localStorage.setItem('vip_platform_sub_count', val);
-    alert('تم تحديث عدد المشتركين في المنصة بنجاح!');
+    alert('تم تحديث عدد المشتركين بنجاح!');
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -163,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const emailIn = document.getElementById('authEmail');
   const passIn = document.getElementById('authPassword');
-  const payBtn = document.getElementById('payAndJoinBtn');
+  const verifyBtn = document.getElementById('verifyAndJoinBtn');
   const signInBtn = document.getElementById('signInBtn');
   const signOutBtn = document.getElementById('signOutBtn');
   const statusBox = document.getElementById('authStatus');
@@ -174,7 +178,7 @@ window.addEventListener('DOMContentLoaded', () => {
       statusBox.classList.add('show');
   }
 
-  payBtn.addEventListener('click', async () => {
+  verifyBtn.addEventListener('click', async () => {
       const email = emailIn.value.trim();
       const pass = passIn.value;
       const subType = document.getElementById('subType').value;
@@ -186,10 +190,10 @@ window.addEventListener('DOMContentLoaded', () => {
       try {
           await createUserWithEmailAndPassword(auth, email, pass);
           const typeText = subType === 'monthly' ? 'اشتراك شهري (30 يوماً)' : 'اشتراك مفتوح دائم';
-          showMsg(`🎉 تم الدفع والاشتراك بنجاح في [ ${chosenChannel} ] بنظام (${typeText})! حسابك مفعل فوريًا.`);
+          showMsg(`🎉 تم تفعيل حسابك بنجاح في [ ${chosenChannel} ] بنظام (${typeText})!`);
       } catch(err) {
           console.error(err);
-          showMsg('تعذر إنشاء الحساب. البريد قد يكون مستخدماً أو كلمة المرور قصيرة.');
+          showMsg('تعذر إنشاء الحساب. البريد مستخدم مسبقاً أو كلمة المرور قصيرة.');
       }
   });
 
@@ -197,15 +201,15 @@ window.addEventListener('DOMContentLoaded', () => {
       const email = emailIn.value.trim();
       const pass = passIn.value;
       if(!email || !pass) {
-          showMsg('الرجاء كتابة البريد وكلمة المرور لتسجيل الدخول.');
+          showMsg('الرجاء كتابة البريد وكلمة المرور.');
           return;
       }
       try {
           await signInWithEmailAndPassword(auth, email, pass);
-          showMsg('مرحباً بك مجدداً! اشتراكك مفعل.');
+          showMsg('مرحباً بك مجدداً! حسابك مفعل.');
       } catch(err) {
           console.error(err);
-          showMsg('خطأ في تسجيل الدخول. تأكد من صحة البريد وكلمة المرور.');
+          showMsg('خطأ في تسجيل الدخول. تحقق من البيانات.');
       }
   });
 
@@ -216,9 +220,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   onAuthStateChanged(auth, (user) => {
       const logged = Boolean(user);
-      userText.textContent = logged ? `المستخدم الحالي: ${user.email} (حساب مفعل)` : 'لم تقم بتسجيل الدخول بعد.';
+      userText.textContent = logged ? `المستخدم الحالي: ${user.email} (مشترك نشط)` : 'لم تقم بتسجيل الدخول بعد.';
       signOutBtn.hidden = !logged;
-      payBtn.hidden = logged;
+      verifyBtn.hidden = logged;
       signInBtn.hidden = logged;
       emailIn.disabled = logged;
       passIn.disabled = logged;
