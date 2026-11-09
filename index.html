@@ -27,7 +27,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
 .status{padding:12px;border-radius:10px;background:#030712;border:1px solid var(--line);margin-top:10px;display:none}
 .status.show{display:block}
 .adminbox{border:2px dashed #d97706;background:#0d111a}
-.lock-overlay{position:absolute;inset:0;background:rgba(7,10,20,0.85);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;border:1px solid var(--line)}
+.lock-overlay{position:absolute;inset:0;background:rgba(7,10,20,0.88);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;border:1px solid var(--line);z-index:5}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 .post-box{background:#030712;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
 </style>
@@ -48,13 +48,13 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
 
   <!-- أدوات نشر الوسائط والمحتوى (تظهر للمالك فقط) -->
   <section class="card adminbox" id="ownerPublisher" style="display:none;">
-    <h2>✍️ نشر محتوى جديد في القناة (خاص بالمالك)</h2>
-    <p class="muted">أضف منشوراً كتابياً أو رابط صورة/فيديو ليتم عرضه فوراً للمشتركين.</p>
+    <h2>✍️ لوحة نشر المحتوى والوسائط (خاص بالمالك)</h2>
+    <p class="muted">أنشئ منشوراً جديداً أو ارفع صورة/فيديو ليظهر للمشتركين فوراً.</p>
     
     <label for="postText">نص المنشور / الوصف:</label>
     <textarea class="field" id="postText" rows="3" placeholder="اكتب المنشور هنا..."></textarea>
     
-    <label for="postMediaUrl">رابط الصورة أو الفيديو (اختياري):</label>
+    <label for="postMediaUrl">رابط الصورة أو الفيديو:</label>
     <input class="field" id="postMediaUrl" type="url" placeholder="https://example.com/image.jpg">
     
     <button class="btn" onclick="publishContent()">نشر في القناة الآن 🚀</button>
@@ -63,7 +63,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
   <!-- قسم القنوات والمحتوى -->
   <section class="card">
     <h2>📺 القنوات والمحتوى الحصري</h2>
-    <p class="muted">تصفح القنوات أدناه. الأسعار قابلة للتعديل عبر لوحة المالك.</p>
+    <p class="muted">اختر القناة لعرض محتواها أو تفعيل الاشتراك (المالك مستثنى من الدفع).</p>
     
     <div class="channels-grid">
         <div class="channel-card">
@@ -72,29 +72,29 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
             <div style="margin:8px 0;font-size:13px;color:var(--gold);">
                 الشهري: <span id="priceMonthly">10</span>$ | المفتوح: <span id="priceLifetime">45</span>$
             </div>
-            <button class="btn" onclick="selectChannel('قناة الأفلام والسينما')">اشترك بهذه القناة</button>
+            <button class="btn" onclick="selectChannel('قناة الأفلام والسينما')">دخول / تفاصيل القناة</button>
 
-            <!-- طبقة القفل (تختفي إذا كان المالك أو مشتركاً مفصلاً) -->
+            <!-- طبقة القفل (تختفي تلقائياً إذا كان المالك مفعلاً) -->
             <div class="lock-overlay" id="lockOverlay">
                 <div style="font-size:30px;">🔒</div>
-                <div style="font-weight:bold;margin:4px 0;">محتوى محمي</div>
-                <div class="muted" style="font-size:12px;">اشترك أو سجل كمالك لفك القفل</div>
+                <div style="font-weight:bold;margin:4px 0;">محتوى محمي للمشتركين</div>
+                <div class="muted" style="font-size:12px;">قم بالاشتراك أو فعل وضع المالك بالأسفل</div>
             </div>
         </div>
     </div>
 
     <!-- المنشورات المعروضة داخل القناة -->
     <div id="feedPosts" style="margin-top:20px;">
-        <h3 style="font-size:15px;color:var(--muted);">آخر منشورات الوسائط:</h3>
+        <h3 style="font-size:15px;color:var(--muted);">آخر الوسائط والمنشورات:</h3>
         <div class="post-box">
-            <p style="margin:0;">مرحباً بكم في القناة VIP! سيتم نشر الحصريات هنا.</p>
+            <p style="margin:0;">مرحباً بكم في شبكة القنوات الحصرية.</p>
         </div>
     </div>
   </section>
 
-  <!-- بوابة الاشتراك والدفع -->
+  <!-- بوابة الاشتراك والدفع (للأعضاء العاديين فقط) -->
   <section class="card" id="subSection">
-    <h2>💳 الدفع والاشتراك في القناة</h2>
+    <h2>💳 بوابة الاشتراك للزوار</h2>
     <p class="muted">القناة المحددة: <strong id="selectedChannelName" style="color:var(--gold);">قناة الأفلام والسينما</strong></p>
     
     <label for="subType">اختر نوع الاشتراك:</label>
@@ -104,7 +104,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
     </select>
 
     <div style="margin:12px 0;background:rgba(59,130,246,0.1);border:1px solid var(--accent);padding:12px;border-radius:12px;text-align:center;">
-        <p style="margin:0 0 8px 0;font-size:13px;">قم بالدفع أولاً عبر البطاقة أو المحفظة المالية:</p>
+        <p style="margin:0 0 8px 0;font-size:13px;">ادفع أولاً عبر وسائل الدفع المتاحة:</p>
         <a href="https://www.paypal.com" id="payLinkBtn" target="_blank" class="btn" style="background:var(--accent);color:#fff;">انتقل لبوابة الدفع 💳</a>
     </div>
 
@@ -123,44 +123,38 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-appl
     <p class="note" id="authUserText" style="margin-top:10px;">لم تقم بتسجيل الدخول بعد.</p>
   </section>
 
-  <!-- لوحة تحكم المالك المتقدمة -->
+  <!-- لوحة تحكم المالك -->
   <section class="card adminbox">
-    <h2>👑 لوحة تحكم المالك المتقدمة</h2>
-    <p class="muted">إدارة الأسعار، خيارات الدفع، وتفعيل وضع المالك لفك القفل ونشر الوسائط.</p>
+    <h2>👑 لوحة تحكم المالك الحصرية</h2>
+    <p class="muted">بصفتك المالك، يمكنك تفعيل وضع الإدارة لدخول القنوات مباشرة ونشر المحتوى بدون دفع.</p>
     
     <button class="btn" style="background:#10b981;color:#fff;margin-bottom:15px;width:100%;" onclick="toggleOwnerMode()">
-      🔓 تفعيل/إلغاء وضع المالك (فتح القنوات والدخول المباشر)
+      🔓 تفعيل/إلغاء وضع المالك (دخول حر بدون قفل)
     </button>
 
     <div style="border-top:1px dashed var(--line);padding-top:12px;">
-      <h4 style="margin:6px 0;color:var(--gold);">1. تعديل أسعار الاشتراك للقناة:</h4>
+      <h4 style="margin:6px 0;color:var(--gold);">تعديل أسعار القناة:</h4>
       <div class="row">
-        <div style="flex:1;">
-          <label class="note">السعر الشهري ($):</label>
-          <input class="field" id="inputMonthlyPrice" type="number" value="10">
-        </div>
-        <div style="flex:1;">
-          <label class="note">السعر المفتوح ($):</label>
-          <input class="field" id="inputLifetimePrice" type="number" value="45">
-        </div>
+        <div style="flex:1;"><label class="note">الشهري ($):</label><input class="field" id="inputMonthlyPrice" type="number" value="10"></div>
+        <div style="flex:1;"><label class="note">المفتوح ($):</label><input class="field" id="inputLifetimePrice" type="number" value="45"></div>
       </div>
-      <button class="btn secondary" onclick="savePrices()">حفظ الأسعار الجديدة</button>
+      <button class="btn secondary" onclick="savePrices()">حفظ الأسعار</button>
     </div>
 
     <div style="border-top:1px dashed var(--line);margin-top:15px;padding-top:12px;">
-      <h4 style="margin:6px 0;color:var(--gold);">2. تعديل رابط بوابة الدفع:</h4>
-      <input class="field" id="inputPayLink" type="url" placeholder="ضع رابط الدفع الخاص بك هنا (ZainCash/USDT/Visa)...">
+      <h4 style="margin:6px 0;color:var(--gold);">تعديل رابط الدفع:</h4>
+      <input class="field" id="inputPayLink" type="url" placeholder="ضع رابط الدفع هنا...">
       <button class="btn secondary" onclick="savePayLink()">حفظ رابط الدفع</button>
     </div>
 
     <div style="border-top:1px dashed var(--line);margin-top:15px;padding-top:12px;">
-      <h4 style="margin:6px 0;color:var(--gold);">3. تعديل عدد المشتركين الظاهر:</h4>
+      <h4 style="margin:6px 0;color:var(--gold);">تعديل عدد المشتركين الظاهر:</h4>
       <input class="field" id="countInput" type="number" value="500">
       <button class="btn secondary" onclick="updateGlobalCount()">تحديث العدد</button>
     </div>
   </section>
 
-  <div class="footer">جميع الحقوق محفوظة · منصة VIP المتقدمة</div>
+  <div class="footer">جميع الحقوق محفوظة · منصة VIP</div>
 </div>
 
 <script>
@@ -170,15 +164,18 @@ function toggleOwnerMode() {
     isOwner = !isOwner;
     const lock = document.getElementById('lockOverlay');
     const publisher = document.getElementById('ownerPublisher');
+    const subBox = document.getElementById('subSection');
     
     if(isOwner) {
         lock.style.display = 'none';
         publisher.style.display = 'block';
-        alert('تم تفعيل وضع المالك بنجاح! تم فتح القنوات وإضافة خيار نشر الوسائط والكتابة.');
+        subBox.style.display = 'none'; // إخفاء قسم الدفع تماماً عن المالك
+        alert('أهلاً بك يا مالك المنصة! تم فتح القنوات وتفعيل لوحة النشر فوراً بدون أي رسوم.');
     } else {
         lock.style.display = 'flex';
         publisher.style.display = 'none';
-        alert('تم الخروج من وضع المالك.');
+        subBox.style.display = 'block';
+        alert('تم إيقاف وضع المالك.');
     }
 }
 
@@ -189,7 +186,7 @@ function savePrices() {
     document.getElementById('priceLifetime').textContent = l;
     localStorage.setItem('vip_monthly_price', m);
     localStorage.setItem('vip_lifetime_price', l);
-    alert('تم حفظ وتحديث الأسعار الجديدة للقناة!');
+    alert('تم حفظ الأسعار بنجاح!');
 }
 
 function savePayLink() {
@@ -197,7 +194,7 @@ function savePayLink() {
     if(link) {
         document.getElementById('payLinkBtn').href = link;
         localStorage.setItem('vip_pay_link', link);
-        alert('تم تحديث رابط بوابة الدفع بنجاح!');
+        alert('تم حفظ رابط الدفع!');
     }
 }
 
@@ -207,7 +204,7 @@ function publishContent() {
     const feed = document.getElementById('feedPosts');
 
     if(!txt && !media) {
-        alert('يرجى كتابة نص أو وضع رابط وسائط أولاً.');
+        alert('يرجى كتابة نص أو إدخال رابط وسائط.');
         return;
     }
 
@@ -215,14 +212,14 @@ function publishContent() {
     newPost.className = 'post-box';
     let html = `<p style="margin:0;">${txt}</p>`;
     if(media) {
-        html += `<img src="${media}" style="width:100%;max-height:250px;object-fit:cover;border-radius:8px;margin-top:8px;">`;
+        html += `<img src="${media}" style="width:100%;max-height:280px;object-fit:cover;border-radius:8px;margin-top:8px;">`;
     }
     newPost.innerHTML = html;
     feed.prepend(newPost);
     
     document.getElementById('postText').value = '';
     document.getElementById('postMediaUrl').value = '';
-    alert('تم نشر المحتوى بنجاح داخل القناة!');
+    alert('تم النشر بنجاح داخل القناة!');
 }
 
 function selectChannel(name) {
@@ -230,104 +227,4 @@ function selectChannel(name) {
     document.getElementById('subSection').scrollIntoView({behavior:'smooth'});
 }
 
-function updateGlobalCount() {
-    const val = Math.max(0, Number(document.getElementById('countInput').value) || 0);
-    document.getElementById('globalCountDisplay').textContent = val;
-    localStorage.setItem('vip_platform_sub_count', val);
-    alert('تم تحديث عدد المشتركين بنجاح!');
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    const savedCount = localStorage.getItem('vip_platform_sub_count');
-    if(savedCount !== null) document.getElementById('globalCountDisplay').textContent = savedCount;
-    
-    const mPrice = localStorage.getItem('vip_monthly_price');
-    const lPrice = localStorage.getItem('vip_lifetime_price');
-    if(mPrice) { document.getElementById('priceMonthly').textContent = mPrice; document.getElementById('inputMonthlyPrice').value = mPrice; }
-    if(lPrice) { document.getElementById('priceLifetime').textContent = lPrice; document.getElementById('inputLifetimePrice').value = lPrice; }
-
-    const pLink = localStorage.getItem('vip_pay_link');
-    if(pLink) { document.getElementById('payLinkBtn').href = pLink; document.getElementById('inputPayLink').value = pLink; }
-});
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-  import {
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
-    authDomain: "vip-channel-b726b.firebaseapp.com",
-    databaseURL: "https://vip-channel-b726b-default-rtdb.firebaseio.com",
-    projectId: "vip-channel-b726b",
-    storageBucket: "vip-channel-b726b.firebasestorage.app",
-    messagingSenderId: "580276993013",
-    appId: "1:580276993013:web:dbda819bd9d0f4e94e7ebc",
-    measurementId: "G-QLE5VPN8FP"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const emailIn = document.getElementById('authEmail');
-  const passIn = document.getElementById('authPassword');
-  const verifyBtn = document.getElementById('verifyAndJoinBtn');
-  const signInBtn = document.getElementById('signInBtn');
-  const signOutBtn = document.getElementById('signOutBtn');
-  const statusBox = document.getElementById('authStatus');
-  const userText = document.getElementById('authUserText');
-
-  function showMsg(txt) {
-      statusBox.textContent = txt;
-      statusBox.classList.add('show');
-  }
-
-  verifyBtn.addEventListener('click', async () => {
-      const email = emailIn.value.trim();
-      const pass = passIn.value;
-      if(!email || !pass) { showMsg('الرجاء إدخال البريد الإلكتروني وكلمة المرور.'); return; }
-      try {
-          await createUserWithEmailAndPassword(auth, email, pass);
-          document.getElementById('lockOverlay').style.display = 'none';
-          showMsg('🎉 تم تفعيل حسابك واشتراكك بنجاح! تم فك قفل القناة.');
-      } catch(err) {
-          showMsg('تعذر إنشاء الحساب. تأكد من البيانات.');
-      }
-  });
-
-  signInBtn.addEventListener('click', async () => {
-      const email = emailIn.value.trim();
-      const pass = passIn.value;
-      if(!email || !pass) { showMsg('أدخل البريد وكلمة المرور.'); return; }
-      try {
-          await signInWithEmailAndPassword(auth, email, pass);
-          document.getElementById('lockOverlay').style.display = 'none';
-          showMsg('مرحباً بك! تم فك القفل.');
-      } catch(err) {
-          showMsg('خطأ في تسجيل الدخول.');
-      }
-  });
-
-  signOutBtn.addEventListener('click', async () => {
-      await signOut(auth);
-      document.getElementById('lockOverlay').style.display = 'flex';
-      showMsg('تم تسجيل الخروج.');
-  });
-
-  onAuthStateChanged(auth, (user) => {
-      const logged = Boolean(user);
-      userText.textContent = logged ? `المستخدم الحالي: ${user.email}` : 'لم تقم بتسجيل الدخول بعد.';
-      signOutBtn.hidden = !logged;
-      verifyBtn.hidden = logged;
-      signInBtn.hidden = logged;
-      emailIn.disabled = logged;
-      passIn.disabled = logged;
-      if(logged) document.getElementById('lockOverlay').style.display = 'none';
-  });
-</script>
-
-</body>
-</html>
+function
