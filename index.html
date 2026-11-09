@@ -3,151 +3,136 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>منصة القنوات VIP الاحترافية</title>
+<title>منصة القنوات VIP - نمط المحادثة</title>
 <style>
-:root{--bg:#070a14;--panel:#111827;--panel2:#1f293d;--text:#f9fafb;--muted:#9ca3af;--gold:#f59e0b;--line:#374151;--accent:#3b82f6}
+:root{--bg:#0e1621;--panel:#17212b;--panel2:#242f3d;--text:#f5f6f8;--muted:#707c88;--gold:#f59e0b;--line:#2b3847;--accent:#2ee59d;--msg-owner:#2b5278}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6;
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5;
 -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
-.wrap{max-width:800px;margin:auto;padding:16px}
-.top{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
-.avatar{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#f59e0b,#d97706);display:grid;place-items:center;color:#000;font-weight:900;font-size:24px}
-.top h1{font-size:22px;margin:0}.muted{color:var(--muted);font-size:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 10px 25px rgba(0,0,0,.3)}
-.card h2{font-size:18px;margin:0 0 12px;color:var(--gold)}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;font-size:14px;cursor:pointer;background:var(--gold);color:#111;text-decoration:none;display:inline-block;text-align:center}
+.wrap{max-width:700px;margin:auto;padding:12px;padding-bottom:90px}
+.top{display:flex;align-items:center;gap:12px;padding:12px;background:var(--panel);border-radius:14px;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,.3)}
+.avatar{width:50px;height:50px;border-radius:50%;object-fit:cover;background:#333}
+.top h1{font-size:18px;margin:0;color:#fff}.muted{color:var(--muted);font-size:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;background:var(--gold);color:#111;text-decoration:none;display:inline-block;text-align:center}
 .btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
-.btn:active{transform:scale(.98)}
-.field{display:block;width:100%;padding:12px;margin:8px 0 14px;background:#030712;color:var(--text);border:1px solid var(--line);border-radius:10px;font:inherit}
-.note{font-size:12px;color:var(--muted)}
-.status{padding:12px;border-radius:10px;background:#030712;border:1px solid var(--line);margin-top:10px;display:none}
-.status.show{display:block}
-.adminbox{border:2px dashed #d97706;background:#0d111a}
-.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
+.field{display:block;width:100%;padding:10px;margin:6px 0 10px;background:#0e1621;color:var(--text);border:1px solid var(--line);border-radius:8px;font:inherit}
+.adminbox{border:2px dashed var(--gold);background:#101923}
 
-/* تصميم أيقونات القنوات الدائرية */
-.stories-container{display:flex;gap:16px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+/* أيقونات القنوات الدائرية */
+.stories-container{display:flex;gap:12px;overflow-x:auto;padding:6px 0;scrollbar-width:none}
 .stories-container::-webkit-scrollbar{display:none}
-.story-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex-shrink:0;width:75px}
-.story-ring{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#3b82f6);padding:3px;display:grid;place-items:center;margin-bottom:6px}
+.story-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex-shrink:0;width:68px}
+.story-ring{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#2ee59d);padding:2px;display:grid;place-items:center;margin-bottom:4px}
 .story-img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#222}
-.story-name{font-size:12px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+.story-name{font-size:11px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
 
-.post-box{background:#030712;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+/* واجهة المحادثة داخل القناة */
+.chat-container{display:flex;flex-direction:column;gap:10px;min-height:300px;padding-bottom:10px}
+.msg-bubble{background:var(--msg-owner);border-radius:12px;padding:8px;max-width:85%;position:relative;box-shadow:0 2px 5px rgba(0,0,0,.2);cursor:pointer}
+.msg-bubble img, .msg-bubble video{width:100%;max-height:350px;object-fit:cover;border-radius:8px;display:block}
+.msg-time{font-size:10px;color:#aabac8;text-align:left;margin-top:4px}
+.msg-del-hint{font-size:10px;color:#ff6b6b;margin-top:2px;text-align:right}
+
+/* شريط الإدخال السفلي للمالك (نمط تيليجرام) */
+.chat-input-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);padding:10px;display:none;align-items:center;gap:8px;z-index:100}
+.chat-input-bar input[type="text"]{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:10px 14px;color:#fff;outline:none;font:inherit}
+.file-btn{background:var(--panel2);border:1px solid var(--line);color:#fff;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;font-size:18px}
+.send-btn{background:var(--gold);color:#111;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;font-weight:bold;border:0}
 </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div class="wrap">
   <header class="top">
-    <div class="avatar">VIP</div>
+    <div id="headerAvatar" class="avatar" style="display:grid;place-items:center;font-weight:bold;color:#000;">VIP</div>
     <div style="flex:1">
-      <h1 id="platformTitle">شبكة القنوات الحصرية</h1>
-      <div class="muted">قنوات محمية مع رفع مباشر من الاستوديو</div>
-      <span style="background:rgba(245,158,11,.1);border:1px solid var(--gold);color:var(--gold);padding:4px 12px;border-radius:99px;font-size:12px;display:inline-block;margin-top:6px;">
-        إجمالي المشتركين: <strong id="globalCountDisplay">500</strong>
-      </span>
+      <h1 id="activeChanHeaderTitle">اختر قناة من الأعلى</h1>
+      <div class="muted" id="activeChanHeaderStatus">محتوى محمي وحصري</div>
     </div>
+    <span style="background:rgba(245,158,11,.1);border:1px solid var(--gold);color:var(--gold);padding:3px 10px;border-radius:99px;font-size:11px;">
+      المشتركين: <strong id="globalCountDisplay">500</strong>
+    </span>
   </header>
 
-  <!-- شريط أيقونات القنوات -->
+  <!-- شريط أيقونات القنوات (تيليجرام) -->
   <section class="card">
-    <h2>💬 قنوات المنصة (اضغط على أي قناة لعرضها)</h2>
+    <div class="muted" style="margin-bottom:6px;font-size:12px;">قنوات المنصة المتاحة:</div>
     <div class="stories-container" id="storiesContainer"></div>
   </section>
 
-  <!-- عرض محتوى القناة المحددة -->
+  <!-- عرض رسائل ومحتوى القناة (نمط المحادثة) -->
   <section class="card" id="channelViewCard" style="display:none;">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-      <img id="activeChanImg" src="" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
-      <div>
-        <h2 id="activeChanTitle" style="margin:0;color:var(--gold);">اسم القناة</h2>
-        <span class="muted" id="activeChanPrices">الأسعار: شهري 10$ | مفتوح 45$</span>
-      </div>
+    <div class="chat-container" id="chatContainer">
+      <!-- الرسائل تظهر هنا -->
     </div>
 
-    <!-- صندوق النشر من الاستوديو (للمالك عند التفعيل) -->
-    <div class="adminbox" id="ownerPostSection" style="display:none;padding:14px;border-radius:10px;margin-bottom:12px;">
-      <h4 style="margin:0 0 8px 0;color:var(--gold);">نشر صور وفيديوهات من الاستوديو (خاص بالمالك):</h4>
-      <textarea class="field" id="postText" rows="2" placeholder="اكتب نصاً للمنشور..."></textarea>
-      
-      <label class="note" style="color:var(--gold);">اختر صورة أو فيديو من استوديو هاتفك:</label>
-      <input class="field" id="mediaFileInput" type="file" accept="image/*,video/*" style="padding:8px;">
-      
-      <button class="btn" onclick="publishMediaFromStudio()">نشر في هذه القناة 🚀</button>
-    </div>
-
-    <!-- محتوى القناة -->
-    <div id="channelFeed">
-      <div class="post-box"><p style="margin:0;">مرحباً بك في القناة. المحتوى محمي حصرياً.</p></div>
-    </div>
-
-    <!-- صندوق الدفع -->
-    <div id="channelPayBox" style="margin-top:15px;background:rgba(59,130,246,0.1);border:1px solid var(--accent);padding:14px;border-radius:12px;text-align:center;">
-      <p style="margin:0 0 10px 0;font-size:13px;">للوصول الكامل، اختر نوع الاشتراك وقم بالدفع لحسابنا البنكي:</p>
-      <select class="field" id="selectedSubType" style="margin-bottom:10px;">
+    <!-- صندوق الدفع والاشتراك للزوار -->
+    <div id="channelPayBox" style="margin-top:15px;background:rgba(46,229,157,0.1);border:1px solid var(--accent);padding:12px;border-radius:12px;text-align:center;">
+      <p style="margin:0 0 8px 0;font-size:12px;">للوصول الكامل للمحتوى، اختر الاشتراك وادفع عبر حسابنا البنكي:</p>
+      <select class="field" id="selectedSubType" style="margin-bottom:8px;">
         <option value="monthly">اشتراك شهري (30 يوماً)</option>
         <option value="lifetime">اشتراك مفتوح دائم</option>
       </select>
-      <a href="#" id="channelPayBtn" target="_blank" class="btn" style="background:var(--accent);color:#fff;width:100%;">ادفع الآن بالبطاقة البنكية وانضم 💳</a>
+      <a href="#" id="channelPayBtn" target="_blank" class="btn" style="background:var(--accent);color:#000;width:100%;">ادفع الآن بالبطاقة البنكية 💳</a>
     </div>
   </section>
 
-  <!-- حساب المستخدم -->
+  <!-- حساب المستخدم والتسجيل الدائم -->
   <section class="card" id="accountCard">
-    <h2>🔐 حساب المشترك (لحفظ اشتراكك بشكل دائم)</h2>
-    <p class="muted">سجل دخولك أو أنشئ حساباً لتبقى اشتراكاتك محفوظة في حسابك.</p>
+    <h2>🔐 حساب المشترك (لحفظ اشتراكك)</h2>
+    <p class="muted">سجل ليبقى اشتراكك محفوظاً دون الحاجة لإعادة الدفع.</p>
     <label for="authEmail">البريد الإلكتروني</label>
     <input class="field" id="authEmail" type="email" placeholder="name@example.com">
-    <label for="authPassword">كلمة المرور (6 أحرف فأكثر)</label>
+    <label for="authPassword">كلمة المرور</label>
     <input class="field" id="authPassword" type="password" placeholder="********">
-    <div class="row">
-      <button class="btn" id="signUpBtn">تسجيل الحساب وحفظ الاشتراك ✅</button>
-      <button class="btn secondary" id="signInBtn">تسجيل الدخول</button>
-      <button class="btn secondary" id="signOutBtn" hidden>تسجيل الخروج</button>
+    <div class="row" style="display:flex;gap:8px;">
+      <button class="btn" id="signUpBtn" style="flex:1;">تسجيل وحفظ الاشتراك ✅</button>
+      <button class="btn secondary" id="signInBtn" style="flex:1;">دخول</button>
+      <button class="btn secondary" id="signOutBtn" hidden>خروج</button>
     </div>
-    <div class="status" id="authStatus"></div>
-    <p class="note" id="authUserText" style="margin-top:10px;">لم تقم بتسجيل الدخول بعد.</p>
+    <div class="status" id="authStatus" style="display:none;padding:8px;margin-top:8px;background:#0e1621;border-radius:8px;"></div>
+    <p class="note" id="authUserText" style="margin-top:8px;">لم تقم بتسجيل الدخول بعد.</p>
   </section>
 
-  <!-- لوحة تحكم المالك -->
+  <!-- لوحة تحكم المالك (إنشاء القنوات وتفعيل وضع المالك) -->
   <section class="card adminbox">
-    <h2>👑 لوحة تحكم المالك (إنشاء وإدارة القنوات)</h2>
-    <p class="muted">أنشئ قنوات جديدة، عدل الروابط، وفعل وضع المالك.</p>
+    <h2>👑 لوحة تحكم المالك</h2>
+    <p class="muted">فعّل وضع المالك لتتمكن من النشر والحذف المباشر.</p>
     
-    <button class="btn" style="background:#10b981;color:#fff;margin-bottom:15px;width:100%;" onclick="toggleOwnerMode()">
-      🔓 تفعيل/إلغاء وضع المالك (دخول مجاني لكل القنوات)
+    <button class="btn" style="background:var(--accent);color:#000;margin-bottom:12px;width:100%;" onclick="toggleOwnerMode()">
+      🔓 تفعيل/إلغاء وضع المالك (صلاحيات النشر والحذف)
     </button>
 
-    <div style="border-top:1px dashed var(--line);padding-top:12px;">
-      <h4 style="margin:6px 0;color:var(--gold);">➕ إنشاء قناة جديدة:</h4>
-      <label class="note">اسم القناة:</label>
-      <input class="field" id="newChanName" type="text" placeholder="مثال: قناة المنوعات">
-      
-      <label class="note">رابط صورة القناة (أيقونة دائرية):</label>
-      <input class="field" id="newChanImg" type="url" placeholder="https://example.com/img.jpg">
-
-      <label class="note">سعر الاشتراك الشهري ($):</label>
-      <input class="field" id="newChanMonthly" type="number" value="10">
-
-      <label class="note">سعر الاشتراك المفتوح ($):</label>
-      <input class="field" id="newChanLifetime" type="number" value="45">
-
-      <label class="note">رابط حسابك البنكي للاستلام:</label>
-      <input class="field" id="newChanPayLink" type="url" placeholder="رابط الدفع الخاص بك...">
-
-      <button class="btn" onclick="createNewChannel()">إنشاء وإضافة القناة للمنصة 🚀</button>
+    <div style="border-top:1px dashed var(--line);padding-top:10px;">
+      <h4 style="margin:4px 0;color:var(--gold);font-size:14px;">➕ إنشاء قناة جديدة:</h4>
+      <input class="field" id="newChanName" type="text" placeholder="اسم القناة...">
+      <input class="field" id="newChanImg" type="url" placeholder="رابط صورة الأيقونة الدائرية...">
+      <div style="display:flex;gap:8px;">
+        <input class="field" id="newChanMonthly" type="number" placeholder="السعر الشهري ($)" value="10">
+        <input class="field" id="newChanLifetime" type="number" placeholder="السعر المفتوح ($)" value="45">
+      </div>
+      <input class="field" id="newChanPayLink" type="url" placeholder="رابط حسابك البنكي للدفع...">
+      <button class="btn" onclick="createNewChannel()" style="width:100%;">إنشاء القناة وإضافتها 🚀</button>
     </div>
 
-    <div style="border-top:1px dashed var(--line);margin-top:15px;padding-top:12px;">
-      <h4 style="margin:6px 0;color:var(--gold);">تعديل عدد المشتركين الظاهر:</h4>
+    <div style="border-top:1px dashed var(--line);margin-top:12px;padding-top:10px;">
+      <h4 style="margin:4px 0;color:var(--gold);font-size:14px;">تعديل عدد المشتركين:</h4>
       <input class="field" id="countInput" type="number" value="500">
       <button class="btn secondary" onclick="updateGlobalCount()">تحديث العدد</button>
     </div>
   </section>
 
-  <div class="footer">منصة القنوات الاحترافية المحمية</div>
+  <div class="footer" style="text-align:center;color:var(--muted);font-size:11px;padding:20px 0;">منصة القنوات الاحترافية</div>
+</div>
+
+<!-- شريط الكتابة والوسائط السفلي للمالك (يظهر عند التفعيل فقط) -->
+<div class="chat-input-bar" id="chatInputBar">
+  <label class="file-btn" title="اختر صورة أو فيديو من الاستوديو">
+    📎<input type="file" id="mediaFileInput" accept="image/*,video/*" style="display:none;" onchange="sendMediaMessage(this)">
+  </label>
+  <input type="text" id="chatTextInput" placeholder="اكتب رسالة أو وصف الوسائط...">
+  <button class="send-btn" onclick="sendTextMessage()">➤</button>
 </div>
 
 <script>
@@ -155,8 +140,7 @@ let isOwner = false;
 let activeChannelId = null;
 
 let channels = JSON.parse(localStorage.getItem('vip_channels_list')) || [
-  { id: 1, name: 'قناة الأفلام', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400', monthly: 10, lifetime: 45, payLink: 'https://www.paypal.com', posts: [] },
-  { id: 2, name: 'قناة التقنية', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400', monthly: 8, lifetime: 35, payLink: 'https://www.paypal.com', posts: [] }
+  { id: 1, name: 'قناة كرار علي VIP', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400', monthly: 10, lifetime: 45, payLink: 'https://www.paypal.com', posts: [] }
 ];
 
 function renderChannels() {
@@ -180,29 +164,12 @@ function openChannel(id) {
     activeChannelId = id;
     
     document.getElementById('channelViewCard').style.display = 'block';
-    document.getElementById('activeChanTitle').textContent = chan.name;
-    document.getElementById('activeChanImg').src = chan.img;
-    document.getElementById('activeChanPrices').textContent = `الأسعار: شهري ${chan.monthly}$ | مفتوح ${chan.lifetime}$`;
+    document.getElementById('activeChanHeaderTitle').textContent = chan.name;
+    document.getElementById('activeChanHeaderStatus').textContent = 'قناة محمية - نمط المحادثة';
+    document.getElementById('headerAvatar').innerHTML = `<img src="${chan.img}" class="avatar" style="width:100%;height:100%;">`;
     document.getElementById('channelPayBtn').href = chan.payLink || '#';
 
-    const feed = document.getElementById('channelFeed');
-    feed.innerHTML = '';
-    if(chan.posts && chan.posts.length > 0) {
-        chan.posts.forEach(p => {
-            const box = document.createElement('div');
-            box.className = 'post-box';
-            let h = `<p style="margin:0;">${p.text}</p>`;
-            if(p.type === 'image') {
-                h += `<img src="${p.media}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px;margin-top:8px;">`;
-            } else if(p.type === 'video') {
-                h += `<video src="${p.media}" controls style="width:100%;max-height:300px;border-radius:8px;margin-top:8px;"></video>`;
-            }
-            box.innerHTML = h;
-            feed.appendChild(box);
-        });
-    } else {
-        feed.innerHTML = `<div class="post-box"><p style="margin:0;" class="muted">لا توجد منشورات حالياً في هذه القناة.</p></div>`;
-    }
+    renderChatMessages();
 
     const payBox = document.getElementById('channelPayBox');
     const userSubscribed = localStorage.getItem('sub_chan_' + id) === 'true';
@@ -216,6 +183,115 @@ function openChannel(id) {
     document.getElementById('channelViewCard').scrollIntoView({behavior:'smooth'});
 }
 
+function renderChatMessages() {
+    const chan = channels.find(c => c.id === activeChannelId);
+    const container = document.getElementById('chatContainer');
+    container.innerHTML = '';
+
+    if(!chan || !chan.posts || chan.posts.length === 0) {
+        container.innerHTML = `<div style="text-align:center;color:var(--muted);padding:20px;font-size:13px;">لا توجد رسائل أو وسائط في هذه القناة بعد.</div>`;
+        return;
+    }
+
+    chan.posts.forEach((post, index) => {
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        
+        let contentHtml = '';
+        if(post.type === 'image') {
+            contentHtml += `<img src="${post.media}">`;
+        } else if(post.type === 'video') {
+            contentHtml += `<video src="${post.media}" controls></video>`;
+        }
+        if(post.text) {
+            contentHtml += `<div style="margin-top:6px;font-size:13px;word-break:break-word;">${post.text}</div>`;
+        }
+        
+        contentHtml += `<div class="msg-time">${post.time || ''}</div>`;
+        if(isOwner) {
+            contentHtml += `<div class="msg-del-hint">💡 اضغط مطولاً للحذف</div>`;
+        }
+
+        bubble.innerHTML = contentHtml;
+
+        // ميزة الحذف بالضغط المطول (للمالك فقط)
+        if(isOwner) {
+            let pressTimer;
+            bubble.onmousedown = () => {
+                pressTimer = setTimeout(() => confirmDeletePost(index), 800);
+            };
+            bubble.onmouseup = () => clearTimeout(pressTimer);
+            bubble.ontouchstart = () => {
+                pressTimer = setTimeout(() => confirmDeletePost(index), 800);
+            };
+            bubble.ontouchend = () => clearTimeout(pressTimer);
+        }
+
+        container.appendChild(bubble);
+    });
+}
+
+function confirmDeletePost(index) {
+    if(!isOwner) return;
+    if(confirm('هل تريد حذف هذا المستند أو المنشور نهائياً؟')) {
+        const chan = channels.find(c => c.id === activeChannelId);
+        if(chan && chan.posts) {
+            chan.posts.splice(index, 1);
+            localStorage.setItem('vip_channels_list', JSON.stringify(channels));
+            renderChatMessages();
+            alert('تم حذف المنشور بنجاح.');
+        }
+    }
+}
+
+function sendTextMessage() {
+    if(!isOwner || !activeChannelId) return;
+    const text = document.getElementById('chatTextInput').value.trim();
+    if(!text) return;
+
+    addPostToChannel({ text, media: '', type: 'text', time: getCurrentTime() });
+    document.getElementById('chatTextInput').value = '';
+}
+
+function sendMediaMessage(input) {
+    if(!isOwner || !activeChannelId) return;
+    if(input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const mediaUrl = e.target.result;
+            const fileType = file.type.startsWith('video') ? 'video' : 'image';
+            const text = document.getElementById('chatTextInput').value.trim();
+
+            addPostToChannel({ text, media: mediaUrl, type: fileType, time: getCurrentTime() });
+            document.getElementById('chatTextInput').value = '';
+            input.value = '';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function addPostToChannel(postObj) {
+    const chan = channels.find(c => c.id === activeChannelId);
+    if(chan) {
+        if(!chan.posts) chan.posts = [];
+        chan.posts.push(postObj); // إضافة الرسالة للأسفل مثل تيليجرام
+        localStorage.setItem('vip_channels_list', JSON.stringify(channels));
+        renderChatMessages();
+    }
+}
+
+function getCurrentTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'م' : 'ص';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    return hours + ':' + minutes + ' ' + ampm;
+}
+
 function createNewChannel() {
     const name = document.getElementById('newChanName').value.trim();
     const img = document.getElementById('newChanImg').value.trim();
@@ -223,7 +299,7 @@ function createNewChannel() {
     const lifetime = Number(document.getElementById('newChanLifetime').value) || 45;
     const payLink = document.getElementById('newChanPayLink').value.trim() || '#';
 
-    if(!name || !img) { alert('الرجاء كتابة اسم القناة ورابط الصورة.'); return; }
+    if(!name || !img) { alert('أدخل اسم القناة ورابط الصورة.'); return; }
 
     const newChan = { id: Date.now(), name, img, monthly, lifetime, payLink, posts: [] };
     channels.push(newChan);
@@ -232,148 +308,11 @@ function createNewChannel() {
 
     document.getElementById('newChanName').value = '';
     document.getElementById('newChanImg').value = '';
-    alert('تم إنشاء القناة الجديدة بنجاح!');
-}
-
-function publishMediaFromStudio() {
-    if(!isOwner) return;
-    const text = document.getElementById('postText').value.trim();
-    const fileInput = document.getElementById('mediaFileInput');
-    
-    if(!text && fileInput.files.length === 0) {
-        alert('الرجاء كتابة نص أو اختيار ملف من الاستوديو.');
-        return;
-    }
-
-    const chan = channels.find(c => c.id === activeChannelId);
-    if(!chan) return;
-
-    if(fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const mediaUrl = e.target.result;
-            const fileType = file.type.startsWith('video') ? 'video' : 'image';
-            
-            if(!chan.posts) chan.posts = [];
-            chan.posts.unshift({ text, media: mediaUrl, type: fileType });
-            localStorage.setItem('vip_channels_list', JSON.stringify(channels));
-            openChannel(activeChannelId);
-            
-            document.getElementById('postText').value = '';
-            fileInput.value = '';
-            alert('🎉 تم رفع ونشر الوسائط من الاستوديو بنجاح!');
-        };
-        reader.readAsDataURL(file);
-    } else {
-        if(!chan.posts) chan.posts = [];
-        chan.posts.unshift({ text, media: '', type: 'text' });
-        localStorage.setItem('vip_channels_list', JSON.stringify(channels));
-        openChannel(activeChannelId);
-        
-        document.getElementById('postText').value = '';
-        alert('تم نشر المنشور الكتابي بنجاح!');
-    }
+    alert('تم إنشاء القناة بنجاح!');
 }
 
 function toggleOwnerMode() {
     isOwner = !isOwner;
-    const publisher = document.getElementById('ownerPostSection');
+    const bar = document.getElementById('chatInputBar');
     if(isOwner) {
-        publisher.style.display = 'block';
-        if(activeChannelId) openChannel(activeChannelId);
-        alert('🔓 تم تفعيل وضع المالك: يمكنك النشر من الاستوديو والدخول المجاني!');
-    } else {
-        publisher.style.display = 'none';
-        if(activeChannelId) openChannel(activeChannelId);
-        alert('تم إيقاف وضع المالك.');
-    }
-}
-
-function updateGlobalCount() {
-    const val = Math.max(0, Number(document.getElementById('countInput').value) || 0);
-    document.getElementById('globalCountDisplay').textContent = val;
-    localStorage.setItem('vip_platform_sub_count', val);
-    alert('تم تحديث العدد بنجاح!');
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    renderChannels();
-    const savedCount = localStorage.getItem('vip_platform_sub_count');
-    if(savedCount !== null) document.getElementById('globalCountDisplay').textContent = savedCount;
-});
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-  import {
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBn1JFFmD6B_P__2YX89Kz2x_7Ex-xCVqk",
-    authDomain: "vip-channel-b726b.firebaseapp.com",
-    databaseURL: "https://vip-channel-b726b-default-rtdb.firebaseio.com",
-    projectId: "vip-channel-b726b",
-    storageBucket: "vip-channel-b726b.firebasestorage.app",
-    messagingSenderId: "580276993013",
-    appId: "1:580276993013:web:dbda819bd9d0f4e94e7ebc",
-    measurementId: "G-QLE5VPN8FP"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const emailIn = document.getElementById('authEmail');
-  const passIn = document.getElementById('authPassword');
-  const signUpBtn = document.getElementById('signUpBtn');
-  const signInBtn = document.getElementById('signInBtn');
-  const signOutBtn = document.getElementById('signOutBtn');
-  const statusBox = document.getElementById('authStatus');
-  const userText = document.getElementById('authUserText');
-
-  function showMsg(txt) {
-      statusBox.textContent = txt;
-      statusBox.classList.add('show');
-  }
-
-  signUpBtn.addEventListener('click', async () => {
-      const email = emailIn.value.trim();
-      const pass = passIn.value;
-      if(!email || !pass) { showMsg('أدخل البريد وكلمة المرور.'); return; }
-      try {
-          await createUserWithEmailAndPassword(auth, email, pass);
-          if(activeChannelId) {
-              localStorage.setItem('sub_chan_' + activeChannelId, 'true');
-              openChannel(activeChannelId);
-          }
-          showMsg('🎉 تم إنشاء حسابك وحفظ اشتراكك بشكل دائم!');
-      } catch(err) { showMsg('تعذر إنشاء الحساب.'); }
-  });
-
-  signInBtn.addEventListener('click', async () => {
-      const email = emailIn.value.trim();
-      const pass = passIn.value;
-      if(!email || !pass) { showMsg('أدخل البيانات.'); return; }
-      try {
-          await signInWithEmailAndPassword(auth, email, pass);
-          if(activeChannelId) openChannel(activeChannelId);
-          showMsg('مرحباً بك! تم استعادة اشتراكك.');
-      } catch(err) { showMsg('خطأ في تسجيل الدخول.'); }
-  });
-
-  signOutBtn.addEventListener('click', async () => {
-      await signOut(auth);
-      showMsg('تم تسجيل الخروج.');
-  });
-
-  onAuthStateChanged(auth, (user) => {
-      const logged = Boolean(user);
-      userText.textContent = logged ? `الحساب: ${user.email} (اشتراكاتك محفوظة)` : 'لم تقم بتسجيل الدخول بعد.';
-      signOutBtn.hidden = !logged;
-  });
-</script>
-
-</body>
-</html>
+        bar.style.
